@@ -1,4 +1,48 @@
-# Local env files
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+go.work.sum
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts
+/dist/
+/bin/
+/build/
+/tmp/
+
+# Binary name (замените на имя вашего бинарного файла)
+/main
+/app
+/your-app-name
+
+# Logs
+*.log
+
+# Environment files
 .env
-.env.*
-!.env.example
+.env.local
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
