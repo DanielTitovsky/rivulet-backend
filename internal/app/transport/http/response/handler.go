@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	app_loger "github.com/DanielTitovsky/rivulet-backend.git/internal/app/loger"
 	"go.uber.org/zap"
@@ -45,6 +46,12 @@ func (h *HTTPResponseHandler) JSONResponse(res Response) {
 
 	h.rw.WriteHeader(res.Status)
 	json.NewEncoder(h.rw).Encode(res.Data)
+
+	if res.Status >= 400 {
+		h.log.Error("writed HTTP response", zap.Any("error", res.Data))
+	} else {
+		h.log.Debug("writed HTTP response", zap.String("status", strconv.Itoa(res.Status)))
+	}
 }
 
 func (h *HTTPResponseHandler) PanicResponse(p any, msg string) {
@@ -52,17 +59,29 @@ func (h *HTTPResponseHandler) PanicResponse(p any, msg string) {
 
 	err := fmt.Errorf("unexpected panic: %v", p)
 
-	h.log.Error(msg, zap.Error(err))
+	h.JSONResponse(Response{
+		Status: statusCode,
+		Data: struct {
+			Err         error
+			Description string
+		}{
+			Err:         err,
+			Description: msg,
+		},
+	})
+}
+
+func (h *HTTPResponseHandler) ErrorResponse(err error, msg string) {
+	statusCode := http.StatusBadRequest
 
 	h.JSONResponse(Response{
 		Status: statusCode,
 		Data: struct {
-			message string
+			Error       error  `json:"error"`
+			Description string `json:"description,omitempty"`
 		}{
-			message: msg,
+			Error:       err,
+			Description: msg,
 		},
-	},
-	)
-
-	h.log.Error("writed HTTP response", zap.Error(err))
+	})
 }

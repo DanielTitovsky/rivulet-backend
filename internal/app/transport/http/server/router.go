@@ -1,8 +1,6 @@
 package app_http_server
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,21 +13,26 @@ var (
 )
 
 type ApiVersinRouter struct {
-	ServeGin *gin.Engine
+	ApiGroup *gin.RouterGroup
 	ApiVersion
 }
 
-func NewApiVersinRouter(apiVersion ApiVersion) *ApiVersinRouter {
+func NewApiVersinRouter(apiVersion ApiVersion, apiGroup *gin.RouterGroup) *ApiVersinRouter {
 	return &ApiVersinRouter{
-		ServeGin:   gin.New(),
+		ApiGroup:   apiGroup,
 		ApiVersion: apiVersion,
 	}
 }
 
-func (r *ApiVersinRouter) RegisterRouters(routers ...Route) {
-	for _, route := range routers {
-		pattern := fmt.Sprintf("%s %s", route.Method, route.Path)
+func (r *ApiVersinRouter) RegisterRouters(group *gin.RouterGroup, routes ...Route) {
+	r.ApiGroup = group
 
-		r.ServeGin.Handle(route.Method, pattern, route.Handler)
+	for _, route := range routes {
+		handlers := make([]gin.HandlerFunc, 0, len(route.Middlewares)+1)
+
+		handlers = append(handlers, route.Middlewares...)
+		handlers = append(handlers, route.Handler)
+
+		r.ApiGroup.Handle(route.Method, route.Path, handlers...)
 	}
 }

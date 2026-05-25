@@ -8,8 +8,8 @@ import (
 )
 
 type HttpServerConfig struct {
-	Addr         string        `envconfig:"PATH" requrired:"true"`
-	ShutdownTime time.Duration `envconfig:"SHUTDOWN_TIMEOUT" requrired:"true"`
+	Addr         string        `envconfig:"ADDR" required:"true"`
+	ShutdownTime time.Duration `envconfig:"SHUTDOWN_TIMEOUT" required:"true"`
 }
 
 func NewConfig() (HttpServerConfig, error) {

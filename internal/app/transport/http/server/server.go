@@ -7,27 +7,37 @@ import (
 	"net/http"
 
 	app_loger "github.com/DanielTitovsky/rivulet-backend.git/internal/app/loger"
+	app_http_middleware "github.com/DanielTitovsky/rivulet-backend.git/internal/app/transport/http/middleware"
+	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
 type HttpServer struct {
-	mux    *http.ServeMux
-	config HttpServerConfig
-	log    *app_loger.Logger
+	ServerGin *gin.Engine
+	config    HttpServerConfig
+	log       *app_loger.Logger
 }
 
 func NewHttpServer(config HttpServerConfig, log *app_loger.Logger) *HttpServer {
+	engine := gin.New()
+
+	engine.Use(gin.Recovery())
+	engine.Use(app_http_middleware.RequestId())
+	engine.Use(app_http_middleware.Logger(log))
+	engine.Use(app_http_middleware.Panic())
+	engine.Use(app_http_middleware.Trace())
+
 	return &HttpServer{
-		mux:    http.NewServeMux(),
-		config: config,
-		log:    log,
+		ServerGin: engine,
+		config:    config,
+		log:       log,
 	}
 }
 
 func (h *HttpServer) Run(ctx context.Context) error {
 	server := &http.Server{
 		Addr:    h.config.Addr,
-		Handler: h.mux,
+		Handler: h.ServerGin,
 	}
 
 	ch := make(chan error, 1)
@@ -70,13 +80,10 @@ func (h *HttpServer) Run(ctx context.Context) error {
 	return nil
 }
 
-func (h *HttpServer) RegisterRouters(apiRouters ...ApiVersinRouter) {
-	for _, router := range apiRouters {
-		prefix := "/api/" + string(router.ApiVersion)
+func (h *HttpServer) RegisterRouters(apiRouter *ApiVersinRouter, routes ...Route) {
+	prefix := "/api/" + string(apiRouter.ApiVersion)
 
-		h.mux.Handle(
-			prefix+"/",
-			http.StripPrefix(prefix, router),
-		)
-	}
+	group := h.ServerGin.Group(prefix)
+
+	apiRouter.RegisterRouters(group, routes...)
 }

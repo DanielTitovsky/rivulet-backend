@@ -19,7 +19,7 @@ func Logger(log *app_loger.Logger) gin.HandlerFunc {
 
 		ctx := context.WithValue(c.Request.Context(), "logger", l)
 
-		c.Request.WithContext(ctx)
+		c.Request = c.Request.WithContext(ctx)
 
 		c.Next()
 	}
