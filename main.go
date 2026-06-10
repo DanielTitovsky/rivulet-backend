@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"os/signal"
 	"syscall"
 
@@ -13,10 +14,15 @@ import (
 	users_service "github.com/DanielTitovsky/rivulet-backend.git/internal/features/users/service"
 	users_transport_http "github.com/DanielTitovsky/rivulet-backend.git/internal/features/users/transport/http"
 	"github.com/bytedance/gopkg/util/logger"
+	"github.com/joho/godotenv"
 	"go.uber.org/zap"
 )
 
 func main() {
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Ошибка загрузки .env файла")
+	}
+
 	ctx, cancel := signal.NotifyContext(
 		context.Background(),
 		syscall.SIGINT,

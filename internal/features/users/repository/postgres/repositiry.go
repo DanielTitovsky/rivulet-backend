@@ -6,10 +6,13 @@ type UsersRepository struct {
 	pool app_postgres_pool.Pool
 }
 
-//7:22:33
-
 func NewUsersRepository(pool app_postgres_pool.Pool) *UsersRepository {
 	return &UsersRepository{
 		pool: pool,
 	}
 }
+
+// SaveUser(ctx context.Context, user domain.User) (domain.User, error)
+// FindUserById(ctx context.Context, userId uuid.UUID) (*domain.User, error)
+// UpdateUser(ctx context.Context, userId domain.User) (*domain.User, error)
+// DeleteUser(ctx context.Context, userId uuid.UUID) error

@@ -18,28 +18,10 @@ type User struct {
 	CreatedAt time.Time
 }
 
-type ProviderType string
-
-const (
-	ProviderGoogle ProviderType = "google"
-	ProviderYandex ProviderType = "yandex"
-	ProviderGit    ProviderType = "git"
-)
-
 var (
 	passwordRegex = regexp.MustCompile(`([0-9].*[a-zA-Z].*[^a-zA-Z0-9]|[0-9].*[^a-zA-Z0-9].*[a-zA-Z]|[a-zA-Z].*[0-9].*[^a-zA-Z0-9]|[a-zA-Z].*[^a-zA-Z0-9].*[0-9]|[^a-zA-Z0-9].*[0-9].*[a-zA-Z]|[^a-zA-Z0-9].*[a-zA-Z].*[0-9])`)
 	emailRegex    = regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
 )
-
-type ProvideUser struct {
-	Provider          ProviderType
-	ProviderUserId    string
-	ProviderUserEmail string
-	EmailVerified     bool
-	Name              string
-	GivenName         string
-	FamilyName        string
-}
 
 func (u *User) PasswordComparison(password string, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
@@ -85,6 +67,39 @@ func (u *User) Validate() error {
 	if match := emailRegex.MatchString(*u.Email); !match {
 		return fmt.Errorf("invalid `Email`")
 	}
+
+	return nil
+}
+
+type UserUpdate struct {
+	Email    *string
+	Password string
+	Name     string
+}
+
+func (u *UserUpdate) Validate() error {
+	if u.Name == "" {
+		return fmt.Errorf("Name cant't be update to null")
+	}
+	return nil
+}
+
+func (u *User) ApplyUpdate(update UserUpdate) error {
+	if err := update.Validate(); err != nil {
+		return fmt.Errorf("validate user update: %w", err)
+	}
+
+	tmp := *u
+
+	tmp.Email = update.Email
+	tmp.Name = update.Name
+	tmp.Password = &update.Password
+
+	if err := tmp.Validate(); err != nil {
+		return fmt.Errorf("validate updated user: %w", err)
+	}
+
+	*u = tmp
 
 	return nil
 }

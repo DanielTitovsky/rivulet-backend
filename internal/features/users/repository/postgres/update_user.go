@@ -6,33 +6,30 @@ import (
 	"time"
 
 	"github.com/DanielTitovsky/rivulet-backend.git/internal/app/domain"
+	"github.com/google/uuid"
 )
 
-func (r *UsersRepository) SaveUser(ctx context.Context, user domain.User) (domain.User, error) {
+func (r *UsersRepository) UpdateUser(ctx context.Context, userId uuid.UUID, user domain.User) (domain.User, error) {
 	var userModel UserModel
+
 	ctx, cancel := context.WithTimeout(ctx, r.pool.GetTimeout())
 	defer cancel()
 
 	query := `
-        INSERT INTO users (
-            email, 
-            name, 
-            hash_password, 
-            updated_at, 
-            created_at
-        ) 
-        VALUES ($1, $2, $3, $4, $5)
+		UPDATE users
+		SET email = $2, name = $3, hash_password = $4, updated_at = $5
+		WHERE id = $1
 		RETURNING id, name, email
-    `
+	`
 
 	err := r.pool.QueryRow(
 		ctx,
 		query,
+		userId,
 		user.Email,
 		user.Name,
-		*user.Password,
-		user.UpdatedAt,
-		user.CreatedAt,
+		user.Password,
+		time.Now(),
 	).Scan(
 		&userModel.Id,
 		&userModel.Name,
@@ -40,8 +37,9 @@ func (r *UsersRepository) SaveUser(ctx context.Context, user domain.User) (domai
 	)
 
 	if err != nil {
-		fmt.Print("-----------------------------------------------------------------------")
+		fmt.Print("\n")
 		fmt.Print(err)
+		fmt.Print("\n")
 		return domain.User{}, fmt.Errorf("Scan user: %w", err)
 	}
 
