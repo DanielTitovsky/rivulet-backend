@@ -9,7 +9,11 @@ import (
 
 	app_loger "github.com/DanielTitovsky/rivulet-backend.git/internal/app/loger"
 	app_postgres_pool "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/postgres/pool"
+	app_postgres_transaction "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/postgres/transaction"
 	app_http_server "github.com/DanielTitovsky/rivulet-backend.git/internal/app/transport/http/server"
+	tracks_postgres_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tracks/repository/postgres"
+	tracks_service "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tracks/service"
+	tracks_transport_http "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tracks/transport/http"
 	users_postgres_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/users/repository/postgres"
 	users_service "github.com/DanielTitovsky/rivulet-backend.git/internal/features/users/service"
 	users_transport_http "github.com/DanielTitovsky/rivulet-backend.git/internal/features/users/transport/http"
@@ -17,6 +21,14 @@ import (
 	"github.com/joho/godotenv"
 	"go.uber.org/zap"
 )
+
+//Пправить респонсы чтобы они возвращали нужный тайп
+//Возвращать в Routers не только список роутов но и список миделварей которые бы относились ко всем роутам.Так же добавить для возможность присваивать к каэдому роуту отдельный миделвеер
+//Нужно на уровне app в repositoey создать подключение к MinIo чтобы генерировать ссылки для получения трека
+//Нужно настроить нормальный возраст ошибок. Сейчас не возможно нормально понять где именно происходит ошибка и возвращается дял пользователя ерунда
+//Дописать валидацию в домене для user и track а также вообщем добавить нормальную валидацию входных параметров
+//Написать для transactionManager config
+//Создать Makefile чтобы не дрочить постоянно env переменные
 
 func main() {
 	if err := godotenv.Load(); err != nil {
@@ -56,15 +68,25 @@ func main() {
 		logger.Fatal("Failed to init postgres connectin: %w", zap.Error(err))
 	}
 
+	txManager := app_postgres_transaction.NewTransactionManager(pool)
+
 	defer pool.Close()
 
 	logger.Debug("Initiazling features", zap.String("feature", "Users"))
 
 	userRepo := users_postgres_repository.NewUsersRepository(pool)
-	userServide := users_service.NewUserServise(userRepo)
+	userServide := users_service.NewUserServise(userRepo, *txManager)
 
 	userTransportHttp := users_transport_http.NewUsersHttpHandler(userServide)
 	userRoutes := userTransportHttp.Routers()
+
+	logger.Debug("Initiazling features", zap.String("feature", "Tracks"))
+
+	trackRepo := tracks_postgres_repository.NewTrackRepository(pool)
+	trackService := tracks_service.NewTrackServise(trackRepo, *txManager)
+
+	trackTransportHttp := tracks_transport_http.NewTrackHttpHandler(trackService)
+	trackRouters := trackTransportHttp.Routers()
 
 	logger.Debug("Initiazling HTTP server")
 
@@ -72,6 +94,7 @@ func main() {
 	apiVersionRoute := app_http_server.NewApiVersinRouter(app_http_server.ApiVersion1, &httpServer.ServerGin.RouterGroup)
 
 	httpServer.RegisterRouters(apiVersionRoute, userRoutes...)
+	httpServer.RegisterRouters(apiVersionRoute, trackRouters...)
 
 	httpServer.Run(ctx)
 }

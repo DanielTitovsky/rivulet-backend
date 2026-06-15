@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (r *UsersRepository) GetUserById(ctx context.Context, userId uuid.UUID) (domain.User, error) {
+func (r *UsersRepository) GetUser(ctx context.Context, userId uuid.UUID) (domain.User, error) {
 	var userModel UserModel
 	ctx, cancel := context.WithTimeout(ctx, r.pool.GetTimeout())
 	defer cancel()
@@ -31,11 +31,6 @@ func (r *UsersRepository) GetUserById(ctx context.Context, userId uuid.UUID) (do
 	)
 
 	if err != nil {
-		fmt.Print("\n")
-		fmt.Print("\n")
-		fmt.Print(err)
-		fmt.Print("\n")
-		fmt.Print("\n")
 		return domain.User{}, fmt.Errorf("Scan user: %w", err)
 	}
 

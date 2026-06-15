@@ -40,8 +40,6 @@ func (r *UsersRepository) SaveUser(ctx context.Context, user domain.User) (domai
 	)
 
 	if err != nil {
-		fmt.Print("-----------------------------------------------------------------------")
-		fmt.Print(err)
 		return domain.User{}, fmt.Errorf("Scan user: %w", err)
 	}
 

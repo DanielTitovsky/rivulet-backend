@@ -14,7 +14,7 @@ func (s *UsersServise) UpdateUser(ctx context.Context, userId uuid.UUID, updateU
 		return domain.User{}, fmt.Errorf("Validate user domain: %w", err)
 	}
 
-	user, err := s.UsersRepository.GetUserById(ctx, userId)
+	user, err := s.UsersRepository.GetUser(ctx, userId)
 
 	if err != nil {
 		return domain.User{}, fmt.Errorf("get user: %w", err)

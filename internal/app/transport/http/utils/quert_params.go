@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func GetQueryParamsId(r *gin.Context, key string) (*uuid.UUID, error) {
+func GetQueryParamsUUID(r *gin.Context, key string) (*uuid.UUID, error) {
 	param := r.Param(key)
 
 	if param == "" {

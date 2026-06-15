@@ -9,7 +9,7 @@ import (
 )
 
 func (s *UsersServise) GetUser(ctx context.Context, userId uuid.UUID) (domain.User, error) {
-	user, err := s.UsersRepository.GetUserById(ctx, userId)
+	user, err := s.UsersRepository.GetUser(ctx, userId)
 
 	if err != nil {
 		return domain.User{}, fmt.Errorf("Get user: %w", err)

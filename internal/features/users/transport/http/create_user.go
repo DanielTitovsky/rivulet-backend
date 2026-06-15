@@ -24,8 +24,6 @@ func (uh *UsersHttpHandler) CreateUser(c *gin.Context) {
 
 	responseHandler := app_http_response.NewHTTPResponseHandler(log, c.Writer)
 
-	log.Debug("Invoke Create handler")
-
 	var requestUser CreateUserRequest
 
 	if err := app_http_request.DecodeAndValidate(*c.Request, &requestUser); err != nil {
@@ -42,7 +40,7 @@ func (uh *UsersHttpHandler) CreateUser(c *gin.Context) {
 		return
 	}
 
-	responseUser := userDTOFromDomain(userDomain)
+	responseUser := CreateUserResponse(userDTOFromDomain(userDomain))
 
 	responseHandler.JSONResponse(app_http_response.Response{Status: http.StatusCreated, Data: responseUser})
 }

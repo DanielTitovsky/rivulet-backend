@@ -1,4 +1,4 @@
-package users_transport_http
+package tracks_transport_http
 
 import (
 	"net/http"
@@ -9,27 +9,32 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type DeleteUserResponse UserDTOResponse
+type GetTrackResponse TrackDTOResponse
 
-func (uh *UsersHttpHandler) DeleteUser(c *gin.Context) {
+func (h *TrackHttpHandler) GetTrack(c *gin.Context) {
 	ctx := c.Request.Context()
 	log := app_loger.FromContext(ctx)
 
 	responseHandler := app_http_response.NewHTTPResponseHandler(log, c.Writer)
 
-	userId, err := app_http_utils.GetQueryParamsUUID(c, "id")
+	trackId, err := app_http_utils.GetQueryParamsUUID(c, "id")
 
 	if err != nil {
 		responseHandler.ErrorResponse(err, "Invalid id")
 		return
 	}
 
-	err = uh.userService.DeleteUser(ctx, *userId)
+	trackDomain, err := h.trackService.GetTrack(ctx, *trackId)
 
 	if err != nil {
-		responseHandler.ErrorResponse(err, "Failed to create user")
+		responseHandler.ErrorResponse(err, "Failed to get track")
 		return
 	}
 
-	responseHandler.JSONResponse(app_http_response.Response{Status: http.StatusOK, Data: true})
+	responseTrack := GetTrackResponse(trackDTOFromDomain(trackDomain))
+
+	responseHandler.JSONResponse(app_http_response.Response{
+		Status: http.StatusOK,
+		Data:   responseTrack,
+	})
 }

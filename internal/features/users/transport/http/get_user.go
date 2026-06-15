@@ -17,12 +17,10 @@ func (uh *UsersHttpHandler) GetUser(c *gin.Context) {
 
 	responseHandler := app_http_response.NewHTTPResponseHandler(log, c.Writer)
 
-	log.Debug("Invoke Create handler")
-
-	userId, err := app_http_utils.GetQueryParamsId(c, "id")
+	userId, err := app_http_utils.GetQueryParamsUUID(c, "id")
 
 	if err != nil {
-		responseHandler.ErrorResponse(err, "Invaled parametrs")
+		responseHandler.ErrorResponse(err, "Invaled id")
 		return
 	}
 
@@ -33,7 +31,7 @@ func (uh *UsersHttpHandler) GetUser(c *gin.Context) {
 		return
 	}
 
-	responseUser := userDTOFromDomain(userDomain)
+	responseUser := GetUserResponse(userDTOFromDomain(userDomain))
 
 	responseHandler.JSONResponse(app_http_response.Response{Status: http.StatusOK, Data: responseUser})
 }

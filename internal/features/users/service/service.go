@@ -4,24 +4,25 @@ import (
 	"context"
 
 	"github.com/DanielTitovsky/rivulet-backend.git/internal/app/domain"
+	app_postgres_transaction "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/postgres/transaction"
 	"github.com/google/uuid"
 )
 
 type UsersServise struct {
-	UsersRepository
+	UsersRepository    UsersRepository
+	TransactionManager app_postgres_transaction.TransactionManager
 }
 
 type UsersRepository interface {
 	SaveUser(ctx context.Context, user domain.User) (domain.User, error)
-	GetUserById(ctx context.Context, userId uuid.UUID) (domain.User, error)
+	GetUser(ctx context.Context, userId uuid.UUID) (domain.User, error)
 	UpdateUser(ctx context.Context, userId uuid.UUID, user domain.User) (domain.User, error)
 	DeleteUser(ctx context.Context, userId uuid.UUID) error
 }
 
-// 	FindUserByEmail(ctx context.Context, userEmail string) (*domain.User, error)
-
-func NewUserServise(rep UsersRepository) *UsersServise {
+func NewUserServise(rep UsersRepository, transactionManager app_postgres_transaction.TransactionManager) *UsersServise {
 	return &UsersServise{
-		UsersRepository: rep,
+		UsersRepository:    rep,
+		TransactionManager: transactionManager,
 	}
 }
