@@ -43,6 +43,11 @@ type TrackUpdate struct {
 	AudioStorageKey string
 }
 
+type TrackFilters struct {
+	Limit  int `json:"limit" form:"limit"`
+	Offset int `json:"offset" form:"offset"`
+}
+
 func (t *Track) Validate() error {
 	return nil
 }

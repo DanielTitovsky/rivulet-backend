@@ -2,11 +2,30 @@ package tracks_service
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/DanielTitovsky/rivulet-backend.git/internal/app/domain"
-	"github.com/google/uuid"
 )
 
-func (s *TrackServise) GetTracks(ctx context.Context, trackId uuid.UUID) ([]domain.Track, error) {
-	return []domain.Track{}, nil
+func (s *TrackServise) GetTracks(ctx context.Context, trackFilter domain.TrackFilters) ([]domain.Track, error) {
+
+	fmt.Print("\n")
+	fmt.Print(trackFilter)
+	fmt.Print("\n")
+
+	if trackFilter.Limit <= 0 {
+		return nil, fmt.Errorf("limit must be non-negative")
+	}
+
+	if trackFilter.Offset < 0 {
+		return nil, fmt.Errorf("ofset must be non-negative")
+	}
+
+	tracks, err := s.TrackRepository.GetTracks(ctx, trackFilter)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to get tracks: %w", err)
+	}
+
+	return tracks, nil
 }

@@ -81,11 +81,6 @@ func (h *HttpServer) Run(ctx context.Context) error {
 }
 
 func (h *HttpServer) RegisterRouters(apiRouter *ApiVersinRouter, routes ...Route) {
-	fmt.Println("Routes count:", len(routes))
-
-	for _, route := range routes {
-		fmt.Printf("%s %s\n", route.Method, route.Path)
-	}
 
 	prefix := "/api/" + string(apiRouter.ApiVersion)
 

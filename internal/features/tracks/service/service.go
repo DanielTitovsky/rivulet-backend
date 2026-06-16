@@ -16,6 +16,7 @@ type TrackServise struct {
 type TrackRepository interface {
 	CreateTrack(ctx context.Context, track domain.Track) (uuid.UUID, error)
 	GetTrack(ctx context.Context, trackId uuid.UUID) (domain.Track, error)
+	GetTracks(ctx context.Context, trackId domain.TrackFilters) ([]domain.Track, error)
 	GetTracksByArtistId(ctx context.Context, artistId uuid.UUID) ([]domain.Track, error)
 	GetTracksByPlaylistId(ctx context.Context, playlistId uuid.UUID) ([]domain.Track, error)
 	UpdateTrack(ctx context.Context, trackId uuid.UUID, track domain.Track) error

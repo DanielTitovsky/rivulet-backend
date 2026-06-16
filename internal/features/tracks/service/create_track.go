@@ -16,9 +16,6 @@ func (s *TrackServise) CreateTrack(ctx context.Context, track domain.Track) (dom
 	track, err := s.startCreateTrackTx(ctx, track)
 
 	if err != nil {
-		fmt.Print("\n")
-		fmt.Print(err)
-		fmt.Print("\n")
 		return domain.Track{}, fmt.Errorf("Failed to create track: %w", err)
 	}
 

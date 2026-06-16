@@ -16,7 +16,7 @@ type TrackHttpHandler struct {
 type TrackService interface {
 	CreateTrack(ctx context.Context, track domain.Track) (domain.Track, error)
 	GetTrack(ctx context.Context, trackId uuid.UUID) (domain.Track, error)
-	GetTracks(ctx context.Context, trackId uuid.UUID) ([]domain.Track, error)
+	GetTracks(ctx context.Context, filter domain.TrackFilters) ([]domain.Track, error)
 	DeleteTrack(ctx context.Context, trackId uuid.UUID) error
 	UpdateTrack(ctx context.Context, trackId uuid.UUID, updateTrack domain.TrackUpdate) (domain.Track, error)
 }
