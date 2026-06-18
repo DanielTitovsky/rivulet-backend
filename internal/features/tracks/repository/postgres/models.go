@@ -21,6 +21,7 @@ type TrackModel struct {
 	Status          string
 	Genre           string
 	ArtistsJSON     []byte
+	GenresJSON      []byte
 }
 
 type trackArtistModel struct {

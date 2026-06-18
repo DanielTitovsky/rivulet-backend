@@ -40,16 +40,21 @@ SELECT
     t.is_downloadable,
     t.audio_storage_key,
     ts.name AS status_name,
-    g.name AS genre,
     COALESCE(
         json_agg(
             json_build_object(
                 'id', a.id,
-                'name', a.name
+                'name', a.name,
+                'description', a.description,
+                'avatar_storage_key', a.avatar_url
             )
         ) FILTER (WHERE a.id IS NOT NULL),
-        '[]'
-    ) AS artists
+        '[]'::json
+    ) AS artists,
+    COALESCE(
+        json_agg(DISTINCT g.name) FILTER (WHERE g.name IS NOT NULL),
+        '[]'::json
+    ) AS genres
 FROM random_tracks rt
 JOIN tracks t ON t.id = rt.id
 LEFT JOIN track_statuses ts ON ts.id = t.status_id
@@ -59,10 +64,18 @@ LEFT JOIN track_artists ta ON ta.track_id = t.id
 LEFT JOIN artists a ON a.id = ta.artist_id
 GROUP BY 
     t.id,
-    ts.name,
-	g.name
+    t.album_id,
+    t.title,
+    t.description,
+    t.cover_url,
+    t.duration_seconds,
+    t.release_date,
+    t.is_explicit,
+    t.is_streamable,
+    t.is_downloadable,
+    t.audio_storage_key,
+    ts.name;
 `
-
 	rows, err := executor.Query(
 		ctx,
 		query,
@@ -71,9 +84,6 @@ GROUP BY
 	)
 
 	if err != nil {
-		fmt.Print("\n")
-		fmt.Print(err)
-		fmt.Print("\n")
 		return []domain.Track{}, fmt.Errorf("Select tracks: %w", err)
 	}
 
@@ -95,12 +105,9 @@ GROUP BY
 			&trackModel.IsDownloadable,
 			&trackModel.AudioStorageKey,
 			&trackModel.Status,
-			&trackModel.Genre,
 			&trackModel.ArtistsJSON,
+			&trackModel.GenresJSON,
 		); err != nil {
-			fmt.Print("\n")
-			fmt.Print(err)
-			fmt.Print("\n")
 			return []domain.Track{}, fmt.Errorf("Scan track: %w", err)
 		}
 
@@ -108,18 +115,12 @@ GROUP BY
 	}
 
 	if err := rows.Err(); err != nil {
-		fmt.Print("\n")
-		fmt.Print(err)
-		fmt.Print("\n")
 		return []domain.Track{}, fmt.Errorf("iterate tracks rows: %w", err)
 	}
 
 	trackDomains, err := r.trackModelsToDomain(trackModels)
 
 	if err != nil {
-		fmt.Print("\n")
-		fmt.Print(err)
-		fmt.Print("\n")
 		return []domain.Track{}, fmt.Errorf("Cast trackModels to domain: %w", err)
 	}
 
@@ -133,9 +134,6 @@ func (r *TrackRepository) trackModelsToDomain(models []TrackModel) ([]domain.Tra
 		var artistsModels []trackArtistModel
 
 		if err := json.Unmarshal(trackModel.ArtistsJSON, &artistsModels); err != nil {
-			fmt.Print("\n")
-			fmt.Print(err)
-			fmt.Print("\n")
 			return []domain.Track{}, fmt.Errorf("unmarshal artists: %w", err)
 		}
 

@@ -41,7 +41,7 @@ func trackDTOFromDomain(track domain.Track) TrackDTOResponse {
 }
 
 func tracksDTOFromDomain(track []domain.Track) []TrackDTOResponse {
-	tracksDTO := make([]TrackDTOResponse, len(track))
+	tracksDTO := make([]TrackDTOResponse, 0, len(track))
 
 	for _, domainTrack := range track {
 		tracksDTO = append(tracksDTO, trackDTOFromDomain(domainTrack))

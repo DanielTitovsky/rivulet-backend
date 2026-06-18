@@ -8,9 +8,11 @@ import (
 	"syscall"
 
 	app_loger "github.com/DanielTitovsky/rivulet-backend.git/internal/app/loger"
+	app_minIo_storage "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/minIo/storage"
 	app_postgres_pool "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/postgres/pool"
 	app_postgres_transaction "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/postgres/transaction"
 	app_http_server "github.com/DanielTitovsky/rivulet-backend.git/internal/app/transport/http/server"
+	tracks_minio_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tracks/repository/minIo"
 	tracks_postgres_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tracks/repository/postgres"
 	tracks_service "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tracks/service"
 	tracks_transport_http "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tracks/transport/http"
@@ -72,6 +74,15 @@ func main() {
 
 	defer pool.Close()
 
+	storage, err := app_minIo_storage.NewMinioStorage(
+		ctx,
+		*app_minIo_storage.NewConfigMust(),
+	)
+
+	if err != nil {
+		logger.Fatal("Failed to init minIo sto: %w", zap.Error(err))
+	}
+
 	logger.Debug("Initiazling features", zap.String("feature", "Users"))
 
 	userRepo := users_postgres_repository.NewUsersRepository(pool)
@@ -83,7 +94,8 @@ func main() {
 	logger.Debug("Initiazling features", zap.String("feature", "Tracks"))
 
 	trackRepo := tracks_postgres_repository.NewTrackRepository(pool)
-	trackService := tracks_service.NewTrackServise(trackRepo, *txManager)
+	trackStorageRepo := tracks_minio_repository.NewTrackRepository(storage)
+	trackService := tracks_service.NewTrackServise(trackRepo, *txManager, trackStorageRepo)
 
 	trackTransportHttp := tracks_transport_http.NewTrackHttpHandler(trackService)
 	trackRouters := trackTransportHttp.Routers()

@@ -1,0 +1,19 @@
+-- Откат структуры БД. Таблицы удаляются в обратном порядке зависимостей.
+DROP TABLE IF EXISTS public.track_genres CASCADE;
+DROP TABLE IF EXISTS public.track_artists CASCADE;
+DROP TABLE IF EXISTS public.playlist_tracks CASCADE;
+DROP TABLE IF EXISTS public.playlist_artists CASCADE;
+DROP TABLE IF EXISTS public.user_liked_tracks CASCADE;
+DROP TABLE IF EXISTS public.tracks CASCADE;
+DROP TABLE IF EXISTS public.refresh_tokens CASCADE;
+DROP TABLE IF EXISTS public.playlists CASCADE;
+DROP TABLE IF EXISTS public.oauth_accounts CASCADE;
+DROP TABLE IF EXISTS public.album_artists CASCADE;
+DROP TABLE IF EXISTS public.users CASCADE;
+DROP TABLE IF EXISTS public.track_statuses CASCADE;
+DROP TABLE IF EXISTS public.genres CASCADE;
+DROP TABLE IF EXISTS public.artists CASCADE;
+DROP TABLE IF EXISTS public.albums CASCADE;
+DROP SEQUENCE IF EXISTS public.track_owners_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS public.playlist_owners_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS public.album_owners_id_seq CASCADE;

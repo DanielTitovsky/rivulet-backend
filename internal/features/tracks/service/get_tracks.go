@@ -8,11 +8,6 @@ import (
 )
 
 func (s *TrackServise) GetTracks(ctx context.Context, trackFilter domain.TrackFilters) ([]domain.Track, error) {
-
-	fmt.Print("\n")
-	fmt.Print(trackFilter)
-	fmt.Print("\n")
-
 	if trackFilter.Limit <= 0 {
 		return nil, fmt.Errorf("limit must be non-negative")
 	}

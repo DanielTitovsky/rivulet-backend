@@ -9,8 +9,9 @@ import (
 )
 
 type TrackServise struct {
-	TrackRepository    TrackRepository
-	TransactionManager app_postgres_transaction.TransactionManager
+	TrackRepository        TrackRepository
+	TrackStorageRepository TrackStorageRepository
+	TransactionManager     app_postgres_transaction.TransactionManager
 }
 
 type TrackRepository interface {
@@ -27,9 +28,18 @@ type TrackRepository interface {
 	DeleteTrack(ctx context.Context, trackId uuid.UUID) error
 }
 
-func NewTrackServise(rep TrackRepository, transactionManager app_postgres_transaction.TransactionManager) *TrackServise {
+type TrackStorageRepository interface {
+	GetTrackLink(ctx context.Context, link string) (string, error)
+}
+
+func NewTrackServise(
+	rep TrackRepository,
+	transactionManager app_postgres_transaction.TransactionManager,
+	TrackStorageRepository TrackStorageRepository,
+) *TrackServise {
 	return &TrackServise{
-		TrackRepository:    rep,
-		TransactionManager: transactionManager,
+		TrackRepository:        rep,
+		TransactionManager:     transactionManager,
+		TrackStorageRepository: TrackStorageRepository,
 	}
 }

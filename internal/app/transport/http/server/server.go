@@ -8,6 +8,7 @@ import (
 
 	app_loger "github.com/DanielTitovsky/rivulet-backend.git/internal/app/loger"
 	app_http_middleware "github.com/DanielTitovsky/rivulet-backend.git/internal/app/transport/http/middleware"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -20,6 +21,8 @@ type HttpServer struct {
 
 func NewHttpServer(config HttpServerConfig, log *app_loger.Logger) *HttpServer {
 	engine := gin.New()
+
+	engine.Use(cors.New(GetCORSConfig()))
 
 	engine.Use(gin.Recovery())
 	engine.Use(app_http_middleware.RequestId())
