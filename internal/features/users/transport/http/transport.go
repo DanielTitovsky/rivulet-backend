@@ -16,8 +16,12 @@ type UsersHttpHandler struct {
 type UserService interface {
 	CreateUser(ctx context.Context, user domain.User) (domain.User, error)
 	GetUser(ctx context.Context, userId uuid.UUID) (domain.User, error)
+	GetUserByEmail(ctx context.Context, email string) (domain.User, error)
 	DeleteUser(ctx context.Context, UserId uuid.UUID) error
 	UpdateUser(ctx context.Context, userId uuid.UUID, updateUser domain.UserUpdate) (domain.User, error)
+	AddTrackToFavorite(ctx context.Context, userId uuid.UUID, trackId uuid.UUID) error
+	RemoveTrackFromFavorite(ctx context.Context, userId uuid.UUID, trackId uuid.UUID) error
+	GetOrCreateOAuthUser(ctx context.Context, email string, name string) (domain.User, error)
 }
 
 func NewUsersHttpHandler(userService UserService) *UsersHttpHandler {
@@ -47,6 +51,16 @@ func (h *UsersHttpHandler) Routers() []app_http_server.Route {
 			Method:  http.MethodPatch,
 			Path:    "/user/:id",
 			Handler: h.UpdateUser,
+		},
+		{
+			Method:  http.MethodPost,
+			Path:    "/user/:id/favorite-track/:trackId",
+			Handler: h.AddTrackToFavorite,
+		},
+		{
+			Method:  http.MethodDelete,
+			Path:    "/user/:id/favorite-track/:trackId",
+			Handler: h.RemoveTrackFromFavorite,
 		},
 	}
 }

@@ -6,11 +6,14 @@ import (
 	"time"
 
 	"github.com/DanielTitovsky/rivulet-backend.git/internal/app/domain"
+	app_postgres_executor "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/postgres"
 )
 
 func (r *UsersRepository) SaveUser(ctx context.Context, user domain.User) (domain.User, error) {
 	var userModel UserModel
-	ctx, cancel := context.WithTimeout(ctx, r.pool.GetTimeout())
+	executor := app_postgres_executor.GetQueryExecutor(ctx, r.pool)
+
+	ctx, cancel := context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
 
 	query := `
@@ -25,7 +28,7 @@ func (r *UsersRepository) SaveUser(ctx context.Context, user domain.User) (domai
 		RETURNING id, name, email
     `
 
-	err := r.pool.QueryRow(
+	err := executor.QueryRow(
 		ctx,
 		query,
 		user.Email,

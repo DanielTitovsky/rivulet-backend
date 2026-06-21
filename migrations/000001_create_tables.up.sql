@@ -165,6 +165,9 @@ CREATE TABLE public.refresh_tokens (
 	CONSTRAINT refresh_tokens_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE
 );
 
+ALTER TABLE public.refresh_tokens
+ADD CONSTRAINT refresh_tokens_user_id_key UNIQUE (user_id);
+
 
 -- public.tracks определение
 

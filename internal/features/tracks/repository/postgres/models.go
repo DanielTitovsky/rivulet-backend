@@ -19,7 +19,7 @@ type TrackModel struct {
 	IsDownloadable  bool
 	AudioStorageKey string
 	Status          string
-	Genre           string
+	Genres          []string
 	ArtistsJSON     []byte
 	GenresJSON      []byte
 }
@@ -28,5 +28,5 @@ type trackArtistModel struct {
 	Id               uuid.UUID `json:"id"`
 	Name             string    `json:"name"`
 	Description      string    `json:"description"`
-	AvatarStorageKey string    `json:"avatar_storage_key"`
+	AvatarStorageKey string    `json:"avatar_url"`
 }

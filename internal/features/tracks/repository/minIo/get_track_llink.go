@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func (r *TrackStorageRepository) GetTrackLink(
+func (r *TrackStorageRepository) GetTrackAudioLink(
 	ctx context.Context,
 	link string,
 ) (string, error) {
@@ -17,7 +17,7 @@ func (r *TrackStorageRepository) GetTrackLink(
 	)
 
 	if err != nil {
-		return "", fmt.Errorf("get track link: %w", err)
+		return "", fmt.Errorf("get track cover link: %w", err)
 	}
 
 	return url, nil

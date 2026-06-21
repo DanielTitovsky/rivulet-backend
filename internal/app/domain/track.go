@@ -15,7 +15,7 @@ type Track struct {
 	ArtistIds       []uuid.UUID
 	Artists         []Artist
 	GenreIds        []uuid.UUID
-	Genres          []Genre
+	Genres          []string
 	CoverStorageKey string
 	DurationSecond  time.Duration
 	ReleaseDate     time.Time

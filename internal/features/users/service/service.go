@@ -16,8 +16,12 @@ type UsersServise struct {
 type UsersRepository interface {
 	SaveUser(ctx context.Context, user domain.User) (domain.User, error)
 	GetUser(ctx context.Context, userId uuid.UUID) (domain.User, error)
+	GetUserByEmail(ctx context.Context, email string) (domain.User, error)
 	UpdateUser(ctx context.Context, userId uuid.UUID, user domain.User) (domain.User, error)
 	DeleteUser(ctx context.Context, userId uuid.UUID) error
+	AddTrackToFavorite(ctx context.Context, userId uuid.UUID, trackId uuid.UUID) error
+	CreateOAuthUser(ctx context.Context, email string, name string) (domain.User, error)
+	RemoveTrackFromFavorite(ctx context.Context, userId uuid.UUID, trackId uuid.UUID) error
 }
 
 func NewUserServise(rep UsersRepository, transactionManager app_postgres_transaction.TransactionManager) *UsersServise {

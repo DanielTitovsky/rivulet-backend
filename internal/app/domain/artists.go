@@ -5,8 +5,8 @@ import (
 )
 
 type Artist struct {
-	Id               uuid.UUID
-	Name             string
-	Description      string
-	AvatarStorageKey string
+	Id          uuid.UUID
+	Name        string
+	AvatarUrl   string
+	Description string
 }

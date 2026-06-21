@@ -3,13 +3,17 @@ package tokens_postgres_repository
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/DanielTitovsky/rivulet-backend.git/internal/app/domain"
+	app_postgres_executor "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/postgres"
 )
 
 func (r *TokenRepository) UpdateUserToken(ctx context.Context, token domain.Token) (*domain.Token, error) {
 	var tokenModel TokenModel
-	ctx, cancel := context.WithTimeout(ctx, r.pool.GetTimeout())
+	executor := app_postgres_executor.GetQueryExecutor(ctx, r.pool)
+
+	ctx, cancel := context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
 
 	query := `
@@ -19,7 +23,7 @@ func (r *TokenRepository) UpdateUserToken(ctx context.Context, token domain.Toke
 		RETURNING id, user_id, token_hash, expires_at, revoked_at, created_at
 	`
 
-	err := r.pool.QueryRow(
+	err := executor.QueryRow(
 		ctx,
 		query,
 		token.Id,

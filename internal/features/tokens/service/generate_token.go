@@ -1,4 +1,4 @@
-package token_service
+package tokens_service
 
 import (
 	"fmt"
@@ -6,62 +6,71 @@ import (
 
 	"github.com/DanielTitovsky/rivulet-backend.git/internal/app/domain"
 	"github.com/golang-jwt/jwt"
-	uuid "github.com/google/uuid"
+	"github.com/google/uuid"
 )
 
-func (th *TokenService) GenerateTokens(accessExpires time.Duration, refreshExpires time.Duration, user domain.User) (*domain.Token, *domain.Token, error) {
+func (s *TokensServise) GenerateTokens(
+	accessExpires time.Duration,
+	refreshExpires time.Duration,
+	user domain.User,
+) (*domain.Token, *domain.Token, error) {
+	now := time.Now()
 
 	accessToken := domain.NewTokenUninitialized(
 		uuid.New(),
 		user.Id,
-		time.Now().Add(accessExpires),
-		time.Now(),
+		now.Add(accessExpires),
+		now,
 	)
-
-	accessClaims := domain.TokenClaims{
-		Id:        accessToken.Id,
-		UserId:    user.Id,
-		UserEmail: *user.Email,
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(accessExpires).Unix(),
-			IssuedAt:  time.Now().Unix(),
-		},
-	}
 
 	refreshToken := domain.NewTokenUninitialized(
 		uuid.New(),
 		user.Id,
-		time.Now().Add(accessExpires),
-		time.Now(),
+		now.Add(refreshExpires),
+		now,
 	)
+
+	userEmail := ""
+
+	if user.Email != nil {
+		userEmail = *user.Email
+	}
+
+	accessClaims := domain.TokenClaims{
+		Id:        accessToken.Id,
+		UserId:    user.Id,
+		UserEmail: userEmail,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: accessToken.ExpiresAt.Unix(),
+			IssuedAt:  now.Unix(),
+		},
+	}
 
 	refreshClaims := domain.TokenClaims{
 		Id:        refreshToken.Id,
 		UserId:    user.Id,
-		UserEmail: *user.Email,
+		UserEmail: userEmail,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(refreshExpires).Unix(),
-			IssuedAt:  time.Now().Unix(),
+			ExpiresAt: refreshToken.ExpiresAt.Unix(),
+			IssuedAt:  now.Unix(),
 		},
 	}
 
-	accessTokenString := jwt.NewWithClaims(jwt.SigningMethodHS256, accessClaims)
-	refreshTokenString := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshClaims)
+	accessJwt := jwt.NewWithClaims(jwt.SigningMethodHS256, accessClaims)
+	refreshJwt := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshClaims)
 
-	accessTokenSigned, err := accessTokenString.SignedString(th.tokenAccessSecret)
-
+	accessTokenString, err := accessJwt.SignedString(s.accessSecret)
 	if err != nil {
-		return nil, nil, fmt.Errorf("Invalid access signed: %w", err)
+		return nil, nil, fmt.Errorf("sign access token: %w", err)
 	}
 
-	refreshTokenSigned, err := refreshTokenString.SignedString(th.tokenRefreshSecret)
-
+	refreshTokenString, err := refreshJwt.SignedString(s.refreshSecret)
 	if err != nil {
-		return nil, nil, fmt.Errorf("Invalid refresh signed: %w", err)
+		return nil, nil, fmt.Errorf("sign refresh token: %w", err)
 	}
 
-	accessToken.TokenString = accessTokenSigned
-	refreshToken.TokenString = refreshTokenSigned
+	accessToken.TokenString = accessTokenString
+	refreshToken.TokenString = refreshTokenString
 
 	return accessToken, refreshToken, nil
 }

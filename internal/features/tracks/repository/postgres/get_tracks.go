@@ -46,7 +46,7 @@ SELECT
                 'id', a.id,
                 'name', a.name,
                 'description', a.description,
-                'avatar_storage_key', a.avatar_url
+                'avatar_url', a.avatar_url
             )
         ) FILTER (WHERE a.id IS NOT NULL),
         '[]'::json
@@ -141,11 +141,17 @@ func (r *TrackRepository) trackModelsToDomain(models []TrackModel) ([]domain.Tra
 
 		for _, artist := range artistsModels {
 			artists = append(artists, domain.Artist{
-				Id:               artist.Id,
-				Name:             artist.Name,
-				Description:      artist.Description,
-				AvatarStorageKey: artist.AvatarStorageKey,
+				Id:          artist.Id,
+				Name:        artist.Name,
+				Description: artist.Description,
+				AvatarUrl:   artist.AvatarStorageKey,
 			})
+		}
+
+		var genres []string
+
+		if err := json.Unmarshal(trackModel.GenresJSON, &genres); err != nil {
+			return []domain.Track{}, fmt.Errorf("unmarshal genres: %w", err)
 		}
 
 		trackDomains = append(trackDomains, domain.Track{

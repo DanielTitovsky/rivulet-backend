@@ -17,6 +17,12 @@ func (r *TrackRepository) GetTrack(ctx context.Context, trackId uuid.UUID) (doma
 	defer cancel()
 
 	query := `
+WITH selected_track AS (
+    SELECT *
+    FROM tracks
+    WHERE id = $1
+    LIMIT 1
+)
 SELECT 
     t.id,
     t.album_id,
@@ -30,28 +36,34 @@ SELECT
     t.is_downloadable,
     t.audio_storage_key,
     ts.name AS status_name,
-    g.name AS genre,
-    COALESCE(
-        json_agg(
-            json_build_object(
-                'id', a.id,
-                'name', a.name
-            )
-        ) FILTER (WHERE a.id IS NOT NULL),
-        '[]'
-    ) AS artists
-FROM tracks t
+
+    COALESCE(genre_data.genres, '[]'::jsonb) AS genres,
+
+    COALESCE(artist_data.artists, '[]'::jsonb) AS artists
+
+FROM selected_track t
 LEFT JOIN track_statuses ts ON ts.id = t.status_id
-LEFT JOIN track_genres tg ON tg.track_id = t.id
-LEFT JOIN genres g ON g.id = tg.genre_id
-LEFT JOIN track_artists ta ON ta.track_id = t.id
-LEFT JOIN artists a ON a.id = ta.artist_id
-WHERE t.id = $1
-GROUP BY 
-    t.id,
-    ts.name,
-    g.name
-LIMIT 1;
+
+LEFT JOIN LATERAL (
+    SELECT jsonb_agg(DISTINCT g.name) AS genres
+    FROM track_genres tg
+    JOIN genres g ON g.id = tg.genre_id
+    WHERE tg.track_id = t.id
+) genre_data ON true
+
+LEFT JOIN LATERAL (
+    SELECT jsonb_agg(
+        DISTINCT jsonb_build_object(
+            'id', a.id,
+            'name', a.name,
+            'description', a.description,
+            'avatar_url', a.avatar_url
+        )
+    ) AS artists
+    FROM track_artists ta
+    JOIN artists a ON a.id = ta.artist_id
+    WHERE ta.track_id = t.id
+) artist_data ON true;
 `
 
 	err := r.pool.QueryRow(
@@ -71,7 +83,7 @@ LIMIT 1;
 		&trackModel.IsDownloadable,
 		&trackModel.AudioStorageKey,
 		&trackModel.Status,
-		&trackModel.Genre,
+		&trackModel.GenresJSON,
 		&trackModel.ArtistsJSON,
 	)
 
@@ -89,11 +101,17 @@ LIMIT 1;
 
 	for _, artist := range artistsModels {
 		artists = append(artists, domain.Artist{
-			Id:               artist.Id,
-			Name:             artist.Name,
-			Description:      artist.Description,
-			AvatarStorageKey: artist.AvatarStorageKey,
+			Id:          artist.Id,
+			Name:        artist.Name,
+			Description: artist.Description,
+			AvatarUrl:   artist.AvatarStorageKey,
 		})
+	}
+
+	var genres []string
+
+	if err := json.Unmarshal(trackModel.GenresJSON, &genres); err != nil {
+		return domain.Track{}, fmt.Errorf("unmarshal genres: %w", err)
 	}
 
 	return domain.Track{
@@ -108,6 +126,7 @@ LIMIT 1;
 		IsExplicit:      trackModel.IsExplicit,
 		IsStreamable:    trackModel.IsStreamable,
 		IsDownloadable:  trackModel.IsDownloadable,
+		Genres:          genres,
 		Status:          trackModel.Status,
 		AudioStorageKey: trackModel.AudioStorageKey,
 	}, nil

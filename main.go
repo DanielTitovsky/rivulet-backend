@@ -8,10 +8,17 @@ import (
 	"syscall"
 
 	app_loger "github.com/DanielTitovsky/rivulet-backend.git/internal/app/loger"
+	app_oauth "github.com/DanielTitovsky/rivulet-backend.git/internal/app/oauth"
 	app_minIo_storage "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/minIo/storage"
 	app_postgres_pool "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/postgres/pool"
 	app_postgres_transaction "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/postgres/transaction"
 	app_http_server "github.com/DanielTitovsky/rivulet-backend.git/internal/app/transport/http/server"
+	auth_postgres_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/auth/repository"
+	auth_service "github.com/DanielTitovsky/rivulet-backend.git/internal/features/auth/service"
+	auth_transport_http "github.com/DanielTitovsky/rivulet-backend.git/internal/features/auth/transport/http"
+	tokens_postgres_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tokens/repository/postgres"
+	tokens_service "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tokens/service"
+	token_transport_http "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tokens/transport/http"
 	tracks_minio_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tracks/repository/minIo"
 	tracks_postgres_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tracks/repository/postgres"
 	tracks_service "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tracks/service"
@@ -100,6 +107,24 @@ func main() {
 	trackTransportHttp := tracks_transport_http.NewTrackHttpHandler(trackService)
 	trackRouters := trackTransportHttp.Routers()
 
+	logger.Debug("Initiazling features", zap.String("feature", "Token"))
+
+	tokenRepo := tokens_postgres_repository.NewTokenRepository(pool)
+	tokenService := tokens_service.NewTokensServise(tokenRepo, "JOPA", "POPA")
+
+	tokenTransportHttp := token_transport_http.NewTokensHttpHandler(tokenService)
+	tokenRouters := tokenTransportHttp.Routers()
+
+	logger.Debug("Initiazling features", zap.String("feature", "Auth"))
+
+	authRepository := auth_postgres_repository.NewAuthRepository(pool)
+	authService := auth_service.NewAuthServise(userServide, tokenService, *txManager, authRepository)
+
+	googleOAuthConfig := app_oauth.NewOAuthConfigMust()
+
+	authTransportHttp := auth_transport_http.NewAuthHttpHandler(authService, googleOAuthConfig)
+	authRouters := authTransportHttp.Routers()
+
 	logger.Debug("Initiazling HTTP server")
 
 	httpServer := app_http_server.NewHttpServer(serverConfig, appLoger)
@@ -107,6 +132,8 @@ func main() {
 
 	httpServer.RegisterRouters(apiVersionRoute, userRoutes...)
 	httpServer.RegisterRouters(apiVersionRoute, trackRouters...)
+	httpServer.RegisterRouters(apiVersionRoute, tokenRouters...)
+	httpServer.RegisterRouters(apiVersionRoute, authRouters...)
 
 	httpServer.Run(ctx)
 }

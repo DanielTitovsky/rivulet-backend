@@ -13,6 +13,7 @@ type TrackDTOResponse struct {
 	Description     string
 	Cover           string
 	AudioStorageKey string
+	Genres          []string
 	AlbumId         uuid.UUID
 	Artists         []domain.Artist
 	Duration        time.Duration
@@ -25,11 +26,13 @@ type TrackDTOResponse struct {
 
 func trackDTOFromDomain(track domain.Track) TrackDTOResponse {
 	return TrackDTOResponse{
-		Id:              track.Id,
-		Name:            track.Name,
-		Description:     track.Description,
+		Id:          track.Id,
+		Name:        track.Name,
+		Description: track.Description,
+
 		Cover:           track.CoverStorageKey,
 		AudioStorageKey: track.AudioStorageKey,
+		Genres:          track.Genres,
 		AlbumId:         *track.AlbumId,
 		Artists:         track.Artists,
 		Duration:        track.DurationSecond,

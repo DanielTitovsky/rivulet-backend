@@ -6,7 +6,7 @@ type TokenRepository struct {
 	pool app_postgres_pool.Pool
 }
 
-func NewUsersRepository(pool app_postgres_pool.Pool) *TokenRepository {
+func NewTokenRepository(pool app_postgres_pool.Pool) *TokenRepository {
 	return &TokenRepository{
 		pool: pool,
 	}

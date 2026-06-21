@@ -15,9 +15,11 @@ func (s *TrackServise) GetTrack(ctx context.Context, trackId uuid.UUID) (domain.
 		return domain.Track{}, fmt.Errorf("Get track by id: %w", err)
 	}
 
-	trackLink, err := s.TrackStorageRepository.GetTrackLink(ctx, track.AudioStorageKey)
+	trackAudioLink, err := s.TrackStorageRepository.GetTrackAudioLink(ctx, track.AudioStorageKey)
+	trackCoverLink, err := s.TrackStorageRepository.GetTrackCoverLink(ctx, track.CoverStorageKey)
 
-	track.AudioStorageKey = trackLink
+	track.AudioStorageKey = trackAudioLink
+	track.CoverStorageKey = trackCoverLink
 
 	return track, nil
 }
