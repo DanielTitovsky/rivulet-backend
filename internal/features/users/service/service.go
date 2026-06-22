@@ -9,8 +9,9 @@ import (
 )
 
 type UsersServise struct {
-	UsersRepository    UsersRepository
-	TransactionManager app_postgres_transaction.TransactionManager
+	UsersRepository       UsersRepository
+	UserStorageRepository UserStorageRepository
+	TransactionManager    app_postgres_transaction.TransactionManager
 }
 
 type UsersRepository interface {
@@ -22,11 +23,18 @@ type UsersRepository interface {
 	AddTrackToFavorite(ctx context.Context, userId uuid.UUID, trackId uuid.UUID) error
 	CreateOAuthUser(ctx context.Context, email string, name string) (domain.User, error)
 	RemoveTrackFromFavorite(ctx context.Context, userId uuid.UUID, trackId uuid.UUID) error
+	GetUserFavoriteTracks(ctx context.Context, userId uuid.UUID) ([]domain.Track, error)
 }
 
-func NewUserServise(rep UsersRepository, transactionManager app_postgres_transaction.TransactionManager) *UsersServise {
+type UserStorageRepository interface {
+	GetTrackAudioLink(ctx context.Context, link string) (string, error)
+	GetTrackCoverLink(ctx context.Context, link string) (string, error)
+}
+
+func NewUserServise(rep UsersRepository, userStorageRepository UserStorageRepository, transactionManager app_postgres_transaction.TransactionManager) *UsersServise {
 	return &UsersServise{
-		UsersRepository:    rep,
-		TransactionManager: transactionManager,
+		UsersRepository:       rep,
+		TransactionManager:    transactionManager,
+		UserStorageRepository: userStorageRepository,
 	}
 }

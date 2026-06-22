@@ -6,7 +6,7 @@ type ArtistRepository struct {
 	pool app_postgres_pool.Pool
 }
 
-func NewUsersRepository(pool app_postgres_pool.Pool) *ArtistRepository {
+func NewArtistRepository(pool app_postgres_pool.Pool) *ArtistRepository {
 	return &ArtistRepository{
 		pool: pool,
 	}

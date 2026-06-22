@@ -1,4 +1,4 @@
-package album_transport_http
+package users_transport_http
 
 import (
 	"net/http"
@@ -9,32 +9,37 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type AlbomsArtistResponce []AlbumDTOResponse
+type GetUserFavoriteTracksResponse []UserDTOResponse
 
-func (h *AlbumHttpHandler) GetArtistAlbums(c *gin.Context) {
+func (h *UsersHttpHandler) GetUserFavoriteTracks(c *gin.Context) {
 	ctx := c.Request.Context()
 	log := app_loger.FromContext(ctx)
 
 	responseHandler := app_http_response.NewHTTPResponseHandler(log, c.Writer)
 
-	artistId, err := app_http_utils.GetQueryParamsUUID(c, "id")
+	userId, err := app_http_utils.GetQueryParamsUUID(c, "id")
 
 	if err != nil {
-		responseHandler.ErrorResponse(err, "Invalid filter params")
+		responseHandler.ErrorResponse(err, "Invalid user id")
 		return
 	}
 
-	albumsDomain, err := h.AlbumService.GetArtistAlbums(ctx, *artistId)
-
-	if err != nil {
-		responseHandler.ErrorResponse(err, "Failed to get atrist albums")
+	if userId == nil {
+		responseHandler.ErrorResponse(err, "Invalid user id")
 		return
 	}
 
-	albumsResponce := AlbomsArtistResponce(albumsDTOFromDomain(albumsDomain))
+	tracksDomain, err := h.userService.GetUserFavoriteTracks(ctx, *userId)
+
+	if err != nil {
+		responseHandler.ErrorResponse(err, "Failed to get user favorite tracks")
+		return
+	}
+
+	responseTracks := tracksDTOFromDomain(tracksDomain)
 
 	responseHandler.JSONResponse(app_http_response.Response{
 		Status: http.StatusOK,
-		Data:   albumsResponce,
+		Data:   responseTracks,
 	})
 }

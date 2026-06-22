@@ -74,6 +74,12 @@ func (h *HTTPResponseHandler) PanicResponse(p any, msg string) {
 func (h *HTTPResponseHandler) ErrorResponse(err error, msg string) {
 	statusCode := http.StatusBadRequest
 
+	fmt.Print("\n")
+	fmt.Print("\n")
+	fmt.Print(err)
+	fmt.Print("\n")
+	fmt.Print("\n")
+
 	h.JSONResponse(Response{
 		Status: statusCode,
 		Data: struct {

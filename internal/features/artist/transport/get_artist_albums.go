@@ -1,4 +1,4 @@
-package album_transport_http
+package artist_transport_http
 
 import (
 	"net/http"
@@ -9,9 +9,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type AlbomsArtistResponce []AlbumDTOResponse
+type GetArtistAlbumsResponce []ArtistAlbumDTOResponse
 
-func (h *AlbumHttpHandler) GetArtistAlbums(c *gin.Context) {
+func (h *ArtistHttpHandler) GetArtistAlbums(c *gin.Context) {
 	ctx := c.Request.Context()
 	log := app_loger.FromContext(ctx)
 
@@ -20,21 +20,21 @@ func (h *AlbumHttpHandler) GetArtistAlbums(c *gin.Context) {
 	artistId, err := app_http_utils.GetQueryParamsUUID(c, "id")
 
 	if err != nil {
-		responseHandler.ErrorResponse(err, "Invalid filter params")
+		responseHandler.ErrorResponse(err, "Invalid id")
 		return
 	}
 
-	albumsDomain, err := h.AlbumService.GetArtistAlbums(ctx, *artistId)
+	albumsDomain, err := h.ArtistService.GetArtistAlbums(ctx, *artistId)
 
 	if err != nil {
-		responseHandler.ErrorResponse(err, "Failed to get atrist albums")
+		responseHandler.ErrorResponse(err, "Failed to get artist albums")
 		return
 	}
 
-	albumsResponce := AlbomsArtistResponce(albumsDTOFromDomain(albumsDomain))
+	responseAlbums := GetArtistAlbumsResponce(ArtistAlbumsDTOFromDomain(albumsDomain))
 
 	responseHandler.JSONResponse(app_http_response.Response{
 		Status: http.StatusOK,
-		Data:   albumsResponce,
+		Data:   responseAlbums,
 	})
 }

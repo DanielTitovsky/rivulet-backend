@@ -18,6 +18,8 @@ type TrackService interface {
 	GetTrack(ctx context.Context, trackId uuid.UUID) (domain.Track, error)
 	GetRandomTrack(ctx context.Context) (domain.Track, error)
 	GetTracks(ctx context.Context, filter domain.TrackFilters) ([]domain.Track, error)
+	GetTracksByPlaylistId(ctx context.Context, playlistId uuid.UUID) ([]domain.Track, error)
+	GetTracksByArtistId(ctx context.Context, artistId uuid.UUID) ([]domain.Track, error)
 	DeleteTrack(ctx context.Context, trackId uuid.UUID) error
 	UpdateTrack(ctx context.Context, trackId uuid.UUID, updateTrack domain.TrackUpdate) (domain.Track, error)
 }

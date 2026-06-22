@@ -1,13 +1,13 @@
-package artist_postgres_repository
+package playlist_postgres_repository
 
 import app_postgres_pool "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/postgres/pool"
 
-type ArtistRepository struct {
+type PlaylistRepository struct {
 	pool app_postgres_pool.Pool
 }
 
-func NewUsersRepository(pool app_postgres_pool.Pool) *ArtistRepository {
-	return &ArtistRepository{
+func NewUsersRepository(pool app_postgres_pool.Pool) *PlaylistRepository {
+	return &PlaylistRepository{
 		pool: pool,
 	}
 }

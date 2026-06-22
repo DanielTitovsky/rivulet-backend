@@ -6,12 +6,12 @@ import (
 )
 
 type PlaylistDTOResponce struct {
-	Id          uuid.UUID
-	Name        string
-	Description string
-	CoverUrl    string
-	Tracks      []domain.Track
-	Visibility  bool
+	Id          uuid.UUID      `json:"id"`
+	Name        string         `json:"name"`
+	Description string         `json:"description"`
+	CoverUrl    string         `json:"coverUrl"`
+	Tracks      []domain.Track `json:"tracks"`
+	Visibility  bool           `json:"visibility"`
 }
 
 func playlistDTOFromDomain(playlist domain.Playlsit) PlaylistDTOResponce {

@@ -119,7 +119,7 @@ INSERT INTO seed_tracks (
     release_date
 )
 VALUES
-    ('Alt-J - Blood Flood (hitmo.net).mp3', 'Bloodflood', 'Трек Bloodflood', '/cover/track/Bloodflood.jpg', 180, 'songs/Alt-J - Blood Flood (hitmo.net).mp3', 'published', 'An Awesome Wave', DATE '2012-05-25'),
+       ('Alt-J - Blood Flood (hitmo.net).mp3', 'Bloodflood', 'Трек Bloodflood', '/cover/track/Bloodflood.jpg', 180, 'songs/Alt-J - Blood Flood (hitmo.net).mp3', 'published', 'An Awesome Wave', DATE '2012-05-25'),
     ('Alt-J - Breezeblocks (hitmo.net).mp3', 'Breezeblocks', 'Трек Breezeblocks', '/cover/track/Breezeblocks.jpg', 180, 'songs/Alt-J - Breezeblocks (hitmo.net).mp3', 'published', 'An Awesome Wave', DATE '2012-05-25'),
     ('Alt-J - Dissolve Me (hitmo.net).mp3', 'Dissolve Me', 'Трек Dissolve Me', '/cover/track/Dissolve Me.jpg', 180, 'songs/Alt-J - Dissolve Me (hitmo.net).mp3', 'published', 'An Awesome Wave', DATE '2012-05-25'),
     ('Alt-J - Fitzpleasure (hitmo.net).mp3', 'Fitzpleasure', 'Трек Fitzpleasure', '/cover/track/Fitzpleasure.jpg', 180, 'songs/Alt-J - Fitzpleasure (hitmo.net).mp3', 'published', 'An Awesome Wave', DATE '2012-05-25'),
@@ -127,30 +127,36 @@ VALUES
     ('Alt-J - Matilda (hitmo.net).mp3', 'Matilda', 'Трек Matilda', '/cover/track/Matilda.jpg', 180, 'songs/Alt-J - Matilda (hitmo.net).mp3', 'published', 'An Awesome Wave', DATE '2012-05-25'),
     ('Alt-J - Ms (hitmo.net).mp3', 'Ms', 'Трек Ms', '/cover/track/Ms.jpg', 180, 'songs/Alt-J - Ms (hitmo.net).mp3', 'published', 'An Awesome Wave', DATE '2012-05-25'),
     ('Alt-J - Tessellate (hitmo.net).mp3', 'Tessellate', 'Трек Tessellate', '/cover/track/Tessellate.jpg', 180, 'songs/Alt-J - Tessellate (hitmo.net).mp3', 'published', 'An Awesome Wave', DATE '2012-05-25'),
+
     ('Arctic Monkeys - 505.mp3', '505', 'Трек 505', '/cover/track/505.jpg', 180, 'songs/Arctic Monkeys - 505.mp3', 'published', 'Favourite Worst Nightmare', DATE '2007-04-23'),
     ('Arctic Monkeys - Stop The World I Wanna Get Off With You.mp3', 'Stop The World I Wanna Get Off With You', 'Трек Stop The World I Wanna Get Off With You', '/cover/track/Stop The World I Wanna Get Off With You.jpg', 180, 'songs/Arctic Monkeys - Stop The World I Wanna Get Off With You.mp3', 'published', 'Why''d You Only Call Me When You''re High? (Single)', DATE '2013-09-02'),
     ('Arctic Monkeys - Why''d You Only Call Me When You''re High_.mp3', 'Why''d You Only Call Me When You''re High?', 'Трек Why''d You Only Call Me When You''re High?', '/cover/track/Whyd You Only Call Me When Youre High.jpg', 180, 'songs/Arctic Monkeys - Why''d You Only Call Me When You''re High_.mp3', 'published', 'AM', DATE '2013-09-09'),
     ('Artic Monkeys - 505.mp3', '505', 'Трек 505', '/cover/track/505.jpg', 180, 'songs/Artic Monkeys - 505.mp3', 'published', 'Favourite Worst Nightmare', DATE '2007-04-23'),
-    ('Bones - ContinueWithoutSaving! (hitmo.net).mp3', 'ContinueWithoutSaving!', 'Трек ContinueWithoutSaving!', '/cover/track/ContinueWithoutSaving.jpg', 180, 'songs/Bones - ContinueWithoutSaving! (hitmo.net).mp3', 'published', 'UNRENDERED', NULL),
-    ('Bones - CtrlAltDelete (hitmo.net).mp3', 'CtrlAltDelete', 'Трек CtrlAltDelete', '/cover/track/CtrlAltDelete.jpg', 180, 'songs/Bones - CtrlAltDelete (hitmo.net).mp3', 'published', 'UNRENDERED', NULL),
-    ('Bones - Importing (hitmo.net).mp3', 'Importing', 'Трек Importing', '/cover/track/Importing.jpg', 180, 'songs/Bones - Importing (hitmo.net).mp3', 'published', 'UNRENDERED', NULL),
-    ('Bones - LifeRuiner (hitmo.net).mp3', 'LifeRuiner', 'Трек LifeRuiner', '/cover/track/LifeRuiner.jpg', 180, 'songs/Bones - LifeRuiner (hitmo.net).mp3', 'published', 'UNRENDERED', NULL),
-    ('Bones - MinorSetback (hitmo.net).mp3', 'MinorSetback', 'Трек MinorSetback', '/cover/track/MinorSetback.jpg', 180, 'songs/Bones - MinorSetback (hitmo.net).mp3', 'published', 'UNRENDERED', NULL),
-    ('Bones - MissingProjectFiles (hitmo.net).mp3', 'MissingProjectFiles', 'Трек MissingProjectFiles', '/cover/track/MissingProjectFiles.jpg', 180, 'songs/Bones - MissingProjectFiles (hitmo.net).mp3', 'published', 'UNRENDERED', NULL),
-    ('Bones - MyNephewHasAWhitePickupTruck (hitmo.net).mp3', 'MyNephewHasAWhitePickupTruck', 'Трек MyNephewHasAWhitePickupTruck', '/cover/track/MyNephewHasAWhitePickupTruck.jpg', 180, 'songs/Bones - MyNephewHasAWhitePickupTruck (hitmo.net).mp3', 'published', 'UNRENDERED', NULL),
-    ('Bones - SunnyDay (hitmo.net).mp3', 'SunnyDay', 'Трек SunnyDay', '/cover/track/SunnyDay.jpg', 180, 'songs/Bones - SunnyDay (hitmo.net).mp3', 'published', 'UNRENDERED', NULL),
-    ('Bones - SystemPreferences (hitmo.net).mp3', 'SystemPreferences', 'Трек SystemPreferences', '/cover/track/SystemPreferences.jpg', 180, 'songs/Bones - SystemPreferences (hitmo.net).mp3', 'published', 'UNRENDERED', NULL),
-    ('Bones - WhateverHelpsYouSleep (hitmo.net).mp3', 'WhateverHelpsYouSleep', 'Трек WhateverHelpsYouSleep', '/cover/track/WhateverHelpsYouSleep.jpg', 180, 'songs/Bones - WhateverHelpsYouSleep (hitmo.net).mp3', 'published', 'UNRENDERED', NULL),
-    ('Bones feat Ricky A Go Go - YouKnowIWantYou (hitmo.net).mp3', 'YouKnowIWantYou', 'Трек YouKnowIWantYou', '/cover/track/YouKnowIWantYou.jpg', 180, 'songs/Bones feat Ricky A Go Go - YouKnowIWantYou (hitmo.net).mp3', 'published', 'UNRENDERED', NULL),
-    ('Burgos - Fly My Kite.mp3', 'Fly My Kite', 'Трек Fly My Kite', '/cover/track/Fly My Kite.jpg', 180, 'songs/Burgos - Fly My Kite.mp3', 'published', NULL, NULL),
-    ('Burgos - Pancakes.mp3', 'Pancakes', 'Трек Pancakes', '/cover/track/Pancakes.jpg', 180, 'songs/Burgos - Pancakes.mp3', 'published', NULL, NULL),
-    ('Burgos - Ugly.mp3', 'Ugly', 'Трек Ugly', '/cover/track/Ugly.jpg', 180, 'songs/Burgos - Ugly.mp3', 'published', NULL, NULL),
-    ('Caudal - Still Circuit.mp3', 'Still Circuit', 'Трек Still Circuit', '/cover/track/Still Circuit.jpg', 180, 'songs/Caudal - Still Circuit.mp3', 'published', NULL, NULL),
-    ('Haarper - 8 LEGGED FREAK (hitmo.net).mp3', '8 LEGGED FREAK', 'Трек 8 LEGGED FREAK', '/cover/track/8 LEGGED FREAK.jpg', 180, 'songs/Haarper - 8 LEGGED FREAK (hitmo.net).mp3', 'published', 'Y2K', NULL),
-    ('Haarper - CHAINS LIKE A CENOBITE (hitmo.net).mp3', 'CHAINS LIKE A CENOBITE', 'Трек CHAINS LIKE A CENOBITE', '/cover/track/CHAINS LIKE A CENOBITE.jpg', 180, 'songs/Haarper - CHAINS LIKE A CENOBITE (hitmo.net).mp3', 'published', 'Y2K', NULL),
-    ('Haarper - DEVIL MAY KRY (hitmo.net).mp3', 'DEVIL MAY KRY', 'Трек DEVIL MAY KRY', '/cover/track/DEVIL MAY KRY.jpg', 180, 'songs/Haarper - DEVIL MAY KRY (hitmo.net).mp3', 'published', 'Y2K', NULL),
-    ('Haarper - LET EM BLEED (hitmo.net).mp3', 'LET EM BLEED', 'Трек LET EM BLEED', '/cover/track/LET EM BLEED.jpg', 180, 'songs/Haarper - LET EM BLEED (hitmo.net).mp3', 'published', 'Y2K', NULL),
-    ('Haarper - Y2K (hitmo.net).mp3', 'Y2K', 'Трек Y2K', '/cover/track/Y2K.jpg', 180, 'songs/Haarper - Y2K (hitmo.net).mp3', 'published', 'Y2K', NULL),
+
+    ('Bones - ContinueWithoutSaving! (hitmo.net).mp3', 'ContinueWithoutSaving!', 'Трек ContinueWithoutSaving!', '/cover/track/ContinueWithoutSaving.jpg', 180, 'songs/Bones - ContinueWithoutSaving! (hitmo.net).mp3', 'published', 'UNRENDERED', DATE '2017-01-01'),
+    ('Bones - CtrlAltDelete (hitmo.net).mp3', 'CtrlAltDelete', 'Трек CtrlAltDelete', '/cover/track/CtrlAltDelete.jpg', 180, 'songs/Bones - CtrlAltDelete (hitmo.net).mp3', 'published', 'UNRENDERED', DATE '2017-01-01'),
+    ('Bones - Importing (hitmo.net).mp3', 'Importing', 'Трек Importing', '/cover/track/Importing.jpg', 180, 'songs/Bones - Importing (hitmo.net).mp3', 'published', 'UNRENDERED', DATE '2017-01-01'),
+    ('Bones - LifeRuiner (hitmo.net).mp3', 'LifeRuiner', 'Трек LifeRuiner', '/cover/track/LifeRuiner.jpg', 180, 'songs/Bones - LifeRuiner (hitmo.net).mp3', 'published', 'UNRENDERED', DATE '2017-01-01'),
+    ('Bones - MinorSetback (hitmo.net).mp3', 'MinorSetback', 'Трек MinorSetback', '/cover/track/MinorSetback.jpg', 180, 'songs/Bones - MinorSetback (hitmo.net).mp3', 'published', 'UNRENDERED', DATE '2017-01-01'),
+    ('Bones - MissingProjectFiles (hitmo.net).mp3', 'MissingProjectFiles', 'Трек MissingProjectFiles', '/cover/track/MissingProjectFiles.jpg', 180, 'songs/Bones - MissingProjectFiles (hitmo.net).mp3', 'published', 'UNRENDERED', DATE '2017-01-01'),
+    ('Bones - MyNephewHasAWhitePickupTruck (hitmo.net).mp3', 'MyNephewHasAWhitePickupTruck', 'Трек MyNephewHasAWhitePickupTruck', '/cover/track/MyNephewHasAWhitePickupTruck.jpg', 180, 'songs/Bones - MyNephewHasAWhitePickupTruck (hitmo.net).mp3', 'published', 'UNRENDERED', DATE '2017-01-01'),
+    ('Bones - SunnyDay (hitmo.net).mp3', 'SunnyDay', 'Трек SunnyDay', '/cover/track/SunnyDay.jpg', 180, 'songs/Bones - SunnyDay (hitmo.net).mp3', 'published', 'UNRENDERED', DATE '2017-01-01'),
+    ('Bones - SystemPreferences (hitmo.net).mp3', 'SystemPreferences', 'Трек SystemPreferences', '/cover/track/SystemPreferences.jpg', 180, 'songs/Bones - SystemPreferences (hitmo.net).mp3', 'published', 'UNRENDERED', DATE '2017-01-01'),
+    ('Bones - WhateverHelpsYouSleep (hitmo.net).mp3', 'WhateverHelpsYouSleep', 'Трек WhateverHelpsYouSleep', '/cover/track/WhateverHelpsYouSleep.jpg', 180, 'songs/Bones - WhateverHelpsYouSleep (hitmo.net).mp3', 'published', 'UNRENDERED', DATE '2017-01-01'),
+    ('Bones feat Ricky A Go Go - YouKnowIWantYou (hitmo.net).mp3', 'YouKnowIWantYou', 'Трек YouKnowIWantYou', '/cover/track/YouKnowIWantYou.jpg', 180, 'songs/Bones feat Ricky A Go Go - YouKnowIWantYou (hitmo.net).mp3', 'published', 'UNRENDERED', DATE '2017-01-01'),
+
+    ('Burgos - Fly My Kite.mp3', 'Fly My Kite', 'Трек Fly My Kite', '/cover/track/Fly My Kite.jpg', 180, 'songs/Burgos - Fly My Kite.mp3', 'published', NULL, DATE '2020-01-01'),
+    ('Burgos - Pancakes.mp3', 'Pancakes', 'Трек Pancakes', '/cover/track/Pancakes.jpg', 180, 'songs/Burgos - Pancakes.mp3', 'published', NULL, DATE '2020-01-01'),
+    ('Burgos - Ugly.mp3', 'Ugly', 'Трек Ugly', '/cover/track/Ugly.jpg', 180, 'songs/Burgos - Ugly.mp3', 'published', NULL, DATE '2020-01-01'),
+
+    ('Caudal - Still Circuit.mp3', 'Still Circuit', 'Трек Still Circuit', '/cover/track/Still Circuit.jpg', 180, 'songs/Caudal - Still Circuit.mp3', 'published', NULL, DATE '2020-01-01'),
+
+    ('Haarper - 8 LEGGED FREAK (hitmo.net).mp3', '8 LEGGED FREAK', 'Трек 8 LEGGED FREAK', '/cover/track/8 LEGGED FREAK.jpg', 180, 'songs/Haarper - 8 LEGGED FREAK (hitmo.net).mp3', 'published', 'Y2K', DATE '2019-01-01'),
+    ('Haarper - CHAINS LIKE A CENOBITE (hitmo.net).mp3', 'CHAINS LIKE A CENOBITE', 'Трек CHAINS LIKE A CENOBITE', '/cover/track/CHAINS LIKE A CENOBITE.jpg', 180, 'songs/Haarper - CHAINS LIKE A CENOBITE (hitmo.net).mp3', 'published', 'Y2K', DATE '2019-01-01'),
+    ('Haarper - DEVIL MAY KRY (hitmo.net).mp3', 'DEVIL MAY KRY', 'Трек DEVIL MAY KRY', '/cover/track/DEVIL MAY KRY.jpg', 180, 'songs/Haarper - DEVIL MAY KRY (hitmo.net).mp3', 'published', 'Y2K', DATE '2019-01-01'),
+    ('Haarper - LET EM BLEED (hitmo.net).mp3', 'LET EM BLEED', 'Трек LET EM BLEED', '/cover/track/LET EM BLEED.jpg', 180, 'songs/Haarper - LET EM BLEED (hitmo.net).mp3', 'published', 'Y2K', DATE '2019-01-01'),
+    ('Haarper - Y2K (hitmo.net).mp3', 'Y2K', 'Трек Y2K', '/cover/track/Y2K.jpg', 180, 'songs/Haarper - Y2K (hitmo.net).mp3', 'published', 'Y2K', DATE '2019-01-01'),
+
     ('Oliver Tree - Alien Boy (hitmo.net).mp3', 'Alien Boy', 'Трек Alien Boy', '/cover/track/Alien Boy.jpg', 180, 'songs/Oliver Tree - Alien Boy (hitmo.net).mp3', 'published', 'Ugly Is Beautiful', DATE '2020-07-17'),
     ('Oliver Tree - Cash Machine (hitmo.net).mp3', 'Cash Machine', 'Трек Cash Machine', '/cover/track/Cash Machine.jpg', 180, 'songs/Oliver Tree - Cash Machine (hitmo.net).mp3', 'published', 'Ugly Is Beautiful', DATE '2020-07-17'),
     ('Oliver Tree - Hurt (hitmo.net).mp3', 'Hurt', 'Трек Hurt', '/cover/track/Hurt.jpg', 180, 'songs/Oliver Tree - Hurt (hitmo.net).mp3', 'published', 'Ugly Is Beautiful', DATE '2020-07-17'),
@@ -158,14 +164,17 @@ VALUES
     ('Oliver Tree - Me, Myself and I (hitmo.net).mp3', 'Me, Myself and I', 'Трек Me, Myself and I', '/cover/track/Me, Myself and I.jpg', 180, 'songs/Oliver Tree - Me, Myself and I (hitmo.net).mp3', 'published', 'Ugly Is Beautiful', DATE '2020-07-17'),
     ('Oliver Tree - Miracle Man (hitmo.net).mp3', 'Miracle Man', 'Трек Miracle Man', '/cover/track/Miracle Man.jpg', 180, 'songs/Oliver Tree - Miracle Man (hitmo.net).mp3', 'published', 'Ugly Is Beautiful', DATE '2020-07-17'),
     ('Oliver Tree - Waste My Time (hitmo.net).mp3', 'Waste My Time', 'Трек Waste My Time', '/cover/track/Waste My Time.jpg', 180, 'songs/Oliver Tree - Waste My Time (hitmo.net).mp3', 'published', 'Ugly Is Beautiful', DATE '2020-07-17'),
-    ('overtonight_throwaways_overtonight_-_mirrors_demo_(SkySound.cc).mp3', 'mirrors demo', 'Трек mirrors demo', '/cover/track/mirrors demo.jpg', 180, 'songs/overtonight_throwaways_overtonight_-_mirrors_demo_(SkySound.cc).mp3', 'published', NULL, NULL),
-    ('Razegod - Don''t Run (hitmo.net).mp3', 'Don''t Run', 'Трек Don''t Run', '/cover/track/Dont Run.jpg', 180, 'songs/Razegod - Don''t Run (hitmo.net).mp3', 'published', NULL, NULL),
-    ('Razegod - Nerv (hitmo.net).mp3', 'Nerv', 'Трек Nerv', '/cover/track/Nerv.jpg', 180, 'songs/Razegod - Nerv (hitmo.net).mp3', 'published', NULL, NULL),
-    ('Razegod - Teleport Tab (hitmo.net).mp3', 'Teleport Tab', 'Трек Teleport Tab', '/cover/track/Teleport Tab.jpg', 180, 'songs/Razegod - Teleport Tab (hitmo.net).mp3', 'published', NULL, NULL),
-    ('Razegod - Which Way_ (hitmo.net).mp3', 'Which Way?', 'Трек Which Way?', '/cover/track/Which Way.jpg', 180, 'songs/Razegod - Which Way_ (hitmo.net).mp3', 'published', NULL, NULL),
-    ('Razegod, $LOTHBOI - Creation (hitmo.net).mp3', 'Creation', 'Трек Creation', '/cover/track/Creation.jpg', 180, 'songs/Razegod, $LOTHBOI - Creation (hitmo.net).mp3', 'published', NULL, NULL),
-    ('Robert Delong - First Person On Earth.mp3', 'First Person On Earth', 'Трек First Person On Earth', '/cover/track/First Person On Earth.jpg', 180, 'songs/Robert Delong - First Person On Earth.mp3', 'published', NULL, NULL),
-    ('week7-brrring.mp3', 'brrring', 'Трек brrring', '/cover/track/brrring.jpg', 180, 'songs/week7-brrring.mp3', 'published', NULL, NULL);
+
+    ('overtonight_throwaways_overtonight_-_mirrors_demo_(SkySound.cc).mp3', 'mirrors demo', 'Трек mirrors demo', '/cover/track/mirrors demo.jpg', 180, 'songs/overtonight_throwaways_overtonight_-_mirrors_demo_(SkySound.cc).mp3', 'published', NULL, DATE '2023-01-01'),
+
+    ('Razegod - Don''t Run (hitmo.net).mp3', 'Don''t Run', 'Трек Don''t Run', '/cover/track/Dont Run.jpg', 180, 'songs/Razegod - Don''t Run (hitmo.net).mp3', 'published', NULL, DATE '2021-01-01'),
+    ('Razegod - Nerv (hitmo.net).mp3', 'Nerv', 'Трек Nerv', '/cover/track/Nerv.jpg', 180, 'songs/Razegod - Nerv (hitmo.net).mp3', 'published', NULL, DATE '2021-01-01'),
+    ('Razegod - Teleport Tab (hitmo.net).mp3', 'Teleport Tab', 'Трек Teleport Tab', '/cover/track/Teleport Tab.jpg', 180, 'songs/Razegod - Teleport Tab (hitmo.net).mp3', 'published', NULL, DATE '2021-01-01'),
+    ('Razegod - Which Way_ (hitmo.net).mp3', 'Which Way?', 'Трек Which Way?', '/cover/track/Which Way.jpg', 180, 'songs/Razegod - Which Way_ (hitmo.net).mp3', 'published', NULL, DATE '2021-01-01'),
+    ('Razegod, $LOTHBOI - Creation (hitmo.net).mp3', 'Creation', 'Трек Creation', '/cover/track/Creation.jpg', 180, 'songs/Razegod, $LOTHBOI - Creation (hitmo.net).mp3', 'published', NULL, DATE '2021-01-01'),
+
+    ('Robert Delong - First Person On Earth.mp3', 'First Person On Earth', 'Трек First Person On Earth', '/cover/track/First Person On Earth.jpg', 180, 'songs/Robert Delong - First Person On Earth.mp3', 'published', NULL, DATE '2018-01-01'),
+    ('week7-brrring.mp3', 'brrring', 'Трек brrring', '/cover/track/brrring.jpg', 180, 'songs/week7-brrring.mp3', 'published', NULL, DATE '2023-01-01');
 
 INSERT INTO public.tracks (
     album_id,
@@ -390,3 +399,263 @@ JOIN public.genres g ON g.name = stg.genre_name
 ON CONFLICT (track_id, genre_id) DO NOTHING;
 
 COMMIT;
+
+-- =========================
+-- USERS SEED
+-- =========================
+
+INSERT INTO users (
+    id,
+    email,
+    name,
+    hash_password
+)
+VALUES
+(
+    '00000000-0000-0000-0000-000000000101',
+    'demo-user@mail.com',
+    'Demo User',
+      '$2a$14$oFG2YWWttbYa0dWn/eY4J.JgL49ixJI/yXKUwllYy3M4RlSpj.JAO'
+),
+(
+    '00000000-0000-0000-0000-000000000102',
+    'rivulet-listener@mail.com',
+    'Rivulet Listener',
+      '$2a$14$oFG2YWWttbYa0dWn/eY4J.JgL49ixJI/yXKUwllYy3M4RlSpj.JAO'
+)
+ON CONFLICT (email)
+DO UPDATE SET
+    name = EXCLUDED.name;
+
+
+-- =========================
+-- PLAYLISTS SEED
+-- =========================
+
+INSERT INTO playlists (
+    id,
+    user_id,
+    title,
+    description,
+    cover_url,
+    visibility
+)
+VALUES
+(
+    '00000000-0000-0000-0000-000000000201',
+    '00000000-0000-0000-0000-000000000101',
+    'My daily mix',
+    'Tracks for everyday listening',
+    '/cover/playlist/my-daily-mix.jpg',
+    true
+),
+(
+    '00000000-0000-0000-0000-000000000202',
+    '00000000-0000-0000-0000-000000000101',
+    'Indie mood',
+    'Soft indie and alternative tracks',
+    '/cover/playlist/indie-mood.jpg',
+    true
+),
+(
+    '00000000-0000-0000-0000-000000000203',
+    '00000000-0000-0000-0000-000000000102',
+    'Evening playlist',
+    'Music for calm evening',
+    '/cover/playlist/evening-playlist.jpg',
+    false
+)
+ON CONFLICT (id)
+DO UPDATE SET
+    title = EXCLUDED.title,
+    description = EXCLUDED.description,
+    cover_url = EXCLUDED.cover_url,
+    visibility = EXCLUDED.visibility;
+
+
+-- =========================
+-- PLAYLIST TRACKS SEED
+-- =========================
+
+INSERT INTO playlists (
+    id,
+    user_id,
+    title,
+    description,
+    cover_url,
+    visibility
+)
+VALUES
+(
+    '00000000-0000-0000-0000-000000000201',
+    '00000000-0000-0000-0000-000000000101',
+    'My daily mix',
+    'Tracks for everyday listening',
+    '/cover/playlist/my-daily-mix.jpg',
+    'true'
+),
+(
+    '00000000-0000-0000-0000-000000000202',
+    '00000000-0000-0000-0000-000000000101',
+    'Indie mood',
+    'Soft indie and alternative tracks',
+    '/cover/playlist/indie-mood.jpg',
+    'true'
+),
+(
+    '00000000-0000-0000-0000-000000000203',
+    '00000000-0000-0000-0000-000000000102',
+    'Evening playlist',
+    'Music for calm evening',
+    '/cover/playlist/evening-playlist.jpg',
+    'false'
+)
+ON CONFLICT (id)
+DO UPDATE SET
+    title = EXCLUDED.title,
+    description = EXCLUDED.description,
+    cover_url = EXCLUDED.cover_url,
+    visibility = EXCLUDED.visibility;
+
+WITH playlist_track_seed AS (
+    SELECT
+        playlist_id::uuid,
+        audio_storage_key,
+        position
+    FROM (
+        VALUES
+            -- My daily mix
+            (
+                '00000000-0000-0000-0000-000000000201',
+                'songs/Oliver Tree - Alien Boy (hitmo.net).mp3',
+                1
+            ),
+            (
+                '00000000-0000-0000-0000-000000000201',
+                'songs/Oliver Tree - Cash Machine (hitmo.net).mp3',
+                2
+            ),
+            (
+                '00000000-0000-0000-0000-000000000201',
+                'songs/Arctic Monkeys - 505.mp3',
+                3
+            ),
+            (
+                '00000000-0000-0000-0000-000000000201',
+                'songs/Arctic Monkeys - Why''d You Only Call Me When You''re High_.mp3',
+                4
+            ),
+            (
+                '00000000-0000-0000-0000-000000000201',
+                'songs/Alt-J - Breezeblocks (hitmo.net).mp3',
+                5
+            ),
+
+            -- Indie mood
+            (
+                '00000000-0000-0000-0000-000000000202',
+                'songs/Alt-J - Blood Flood (hitmo.net).mp3',
+                1
+            ),
+            (
+                '00000000-0000-0000-0000-000000000202',
+                'songs/Alt-J - Dissolve Me (hitmo.net).mp3',
+                2
+            ),
+            (
+                '00000000-0000-0000-0000-000000000202',
+                'songs/Alt-J - Fitzpleasure (hitmo.net).mp3',
+                3
+            ),
+            (
+                '00000000-0000-0000-0000-000000000202',
+                'songs/Alt-J - Matilda (hitmo.net).mp3',
+                4
+            ),
+            (
+                '00000000-0000-0000-0000-000000000202',
+                'songs/Alt-J - Tessellate (hitmo.net).mp3',
+                5
+            ),
+
+            -- Evening playlist
+            (
+                '00000000-0000-0000-0000-000000000203',
+                'songs/Caudal - Still Circuit.mp3',
+                1
+            ),
+            (
+                '00000000-0000-0000-0000-000000000203',
+                'songs/Robert Delong - First Person On Earth.mp3',
+                2
+            ),
+            (
+                '00000000-0000-0000-0000-000000000203',
+                'songs/overtonight_throwaways_overtonight_-_mirrors_demo_(SkySound.cc).mp3',
+                3
+            ),
+            (
+                '00000000-0000-0000-0000-000000000203',
+                'songs/week7-brrring.mp3',
+                4
+            ),
+            (
+                '00000000-0000-0000-0000-000000000203',
+                'songs/Oliver Tree - Hurt (hitmo.net).mp3',
+                5
+            )
+    ) AS seed(playlist_id, audio_storage_key, position)
+)
+INSERT INTO public.playlist_tracks (
+    playlist_id,
+    track_id,
+    position
+)
+SELECT
+    playlist_track_seed.playlist_id,
+    tracks.id,
+    playlist_track_seed.position
+FROM playlist_track_seed
+JOIN public.tracks
+    ON tracks.audio_storage_key = playlist_track_seed.audio_storage_key
+ON CONFLICT (playlist_id, track_id)
+DO UPDATE SET
+    position = EXCLUDED.position;
+-- =========================
+-- USER FAVORITE TRACKS SEED
+-- =========================
+
+WITH track_list AS (
+    SELECT
+        id,
+        row_number() OVER (ORDER BY id) AS rn
+    FROM tracks
+),
+favorite_track_seed AS (
+    SELECT
+        user_id::uuid,
+        track_number
+    FROM (
+        VALUES
+            ('00000000-0000-0000-0000-000000000101', 1),
+            ('00000000-0000-0000-0000-000000000101', 3),
+            ('00000000-0000-0000-0000-000000000101', 5),
+            ('00000000-0000-0000-0000-000000000101', 7),
+
+            ('00000000-0000-0000-0000-000000000102', 2),
+            ('00000000-0000-0000-0000-000000000102', 4),
+            ('00000000-0000-0000-0000-000000000102', 6),
+            ('00000000-0000-0000-0000-000000000102', 8)
+    ) AS seed(user_id, track_number)
+)
+INSERT INTO user_liked_tracks (
+    user_id,
+    track_id
+)
+SELECT
+    favorite_track_seed.user_id,
+    track_list.id
+FROM favorite_track_seed
+JOIN track_list
+    ON track_list.rn = favorite_track_seed.track_number
+ON CONFLICT DO NOTHING;

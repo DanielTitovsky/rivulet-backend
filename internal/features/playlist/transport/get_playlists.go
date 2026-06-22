@@ -5,33 +5,25 @@ import (
 
 	app_loger "github.com/DanielTitovsky/rivulet-backend.git/internal/app/loger"
 	app_http_response "github.com/DanielTitovsky/rivulet-backend.git/internal/app/transport/http/response"
-	app_http_utils "github.com/DanielTitovsky/rivulet-backend.git/internal/app/transport/http/utils"
 	"github.com/gin-gonic/gin"
 )
 
-type GetUserPlaylistsResponse []PlaylistDTOResponce
+type GetPlaylistsResponse []PlaylistDTOResponce
 
-func (h *PlaylistHttpHandler) GetUserPlaylists(c *gin.Context) {
+func (h *PlaylistHttpHandler) GetPlaylists(c *gin.Context) {
 	ctx := c.Request.Context()
 	log := app_loger.FromContext(ctx)
 
 	responseHandler := app_http_response.NewHTTPResponseHandler(log, c.Writer)
 
-	userId, err := app_http_utils.GetQueryParamsUUID(c, "id")
+	playlistsDomain, err := h.PlaylistService.GetPlaylists(ctx)
 
 	if err != nil {
-		responseHandler.ErrorResponse(err, "Invalid user id")
+		responseHandler.ErrorResponse(err, "Failed to get playlists")
 		return
 	}
 
-	playlistsDomain, err := h.PlaylistService.GetUserPlaylists(ctx, *userId)
-
-	if err != nil {
-		responseHandler.ErrorResponse(err, "Failed to get user playlists")
-		return
-	}
-
-	responsePlaylists := make(GetUserPlaylistsResponse, 0, len(playlistsDomain))
+	responsePlaylists := make(GetPlaylistsResponse, 0, len(playlistsDomain))
 
 	for _, playlist := range playlistsDomain {
 		responsePlaylists = append(responsePlaylists, playlistDTOFromDomain(playlist))

@@ -1,4 +1,4 @@
-package artist_postgres_repository
+package album_postgres_repository
 
 import app_postgres_pool "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/postgres/pool"
 

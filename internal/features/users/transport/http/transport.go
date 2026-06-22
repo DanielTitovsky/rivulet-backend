@@ -22,6 +22,10 @@ type UserService interface {
 	AddTrackToFavorite(ctx context.Context, userId uuid.UUID, trackId uuid.UUID) error
 	RemoveTrackFromFavorite(ctx context.Context, userId uuid.UUID, trackId uuid.UUID) error
 	GetOrCreateOAuthUser(ctx context.Context, email string, name string) (domain.User, error)
+	GetUserFavoriteTracks(
+		ctx context.Context,
+		userId uuid.UUID,
+	) ([]domain.Track, error)
 }
 
 func NewUsersHttpHandler(userService UserService) *UsersHttpHandler {
@@ -61,6 +65,11 @@ func (h *UsersHttpHandler) Routers() []app_http_server.Route {
 			Method:  http.MethodDelete,
 			Path:    "/user/:id/favorite-track/:trackId",
 			Handler: h.RemoveTrackFromFavorite,
+		},
+		{
+			Method:  http.MethodGet,
+			Path:    "/user/:id/favorite-tracks",
+			Handler: h.GetUserFavoriteTracks,
 		},
 	}
 }

@@ -22,7 +22,7 @@ func (r *TrackRepository) GetTracks(ctx context.Context, trackFilter domain.Trac
 WITH random_tracks AS (
     SELECT id 
     FROM tracks t
-    WHERE t.status_id = 2
+    WHERE t.status_id = 1
     ORDER BY RANDOM() 
     LIMIT $1
     OFFSET $2

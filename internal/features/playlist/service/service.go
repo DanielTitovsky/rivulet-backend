@@ -8,13 +8,33 @@ import (
 )
 
 type PlaylistService struct {
+	PlaylistRepository       PlaylistRepository
+	PlaylisttorageRepository PlaylisttorageRepository
+	TrackService             TrackService
 }
 
-type PlayListRepository interface {
+type PlaylistRepository interface {
 	GetPlaylist(ctx context.Context, playlistId uuid.UUID) (domain.Playlsit, error)
-	GetPlaylistUser(ctx context.Context, playlistId uuid.UUID) (domain.Playlsit, error)
+	GetUserPlaylists(ctx context.Context, userId uuid.UUID) ([]domain.Playlsit, error)
+	GetPlaylists(ctx context.Context) ([]domain.Playlsit, error)
 }
 
-type PlayListStorage interface {
-	GetPlayList(ctx context.Context, playlistId uuid.UUID) (domain.Playlsit, error)
+type PlaylisttorageRepository interface {
+	GetPlaylistCoverLink(ctx context.Context, link string) (string, error)
+}
+
+type TrackService interface {
+	GetTracksByPlaylistId(ctx context.Context, playlistId uuid.UUID) ([]domain.Track, error)
+}
+
+func NewPlaylistService(
+	playlistRepository PlaylistRepository,
+	trackService TrackService,
+	playlisttorageRepository PlaylisttorageRepository,
+) *PlaylistService {
+	return &PlaylistService{
+		PlaylistRepository:       playlistRepository,
+		TrackService:             trackService,
+		PlaylisttorageRepository: playlisttorageRepository,
+	}
 }

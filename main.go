@@ -13,9 +13,17 @@ import (
 	app_postgres_pool "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/postgres/pool"
 	app_postgres_transaction "github.com/DanielTitovsky/rivulet-backend.git/internal/app/repository/postgres/transaction"
 	app_http_server "github.com/DanielTitovsky/rivulet-backend.git/internal/app/transport/http/server"
+	artist_minio_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/artist/repository/minio"
+	artist_postgres_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/artist/repository/postgres"
+	artist_service "github.com/DanielTitovsky/rivulet-backend.git/internal/features/artist/service"
+	artist_transport_http "github.com/DanielTitovsky/rivulet-backend.git/internal/features/artist/transport"
 	auth_postgres_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/auth/repository"
 	auth_service "github.com/DanielTitovsky/rivulet-backend.git/internal/features/auth/service"
 	auth_transport_http "github.com/DanielTitovsky/rivulet-backend.git/internal/features/auth/transport/http"
+	playlis_minio_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/playlist/repository/minIo"
+	playlist_postgres_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/playlist/repository/postgres"
+	playlist_service "github.com/DanielTitovsky/rivulet-backend.git/internal/features/playlist/service"
+	playlist_transport_http "github.com/DanielTitovsky/rivulet-backend.git/internal/features/playlist/transport"
 	tokens_postgres_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tokens/repository/postgres"
 	tokens_service "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tokens/service"
 	token_transport_http "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tokens/transport/http"
@@ -23,6 +31,7 @@ import (
 	tracks_postgres_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tracks/repository/postgres"
 	tracks_service "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tracks/service"
 	tracks_transport_http "github.com/DanielTitovsky/rivulet-backend.git/internal/features/tracks/transport/http"
+	users_minio_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/users/repository/minIo"
 	users_postgres_repository "github.com/DanielTitovsky/rivulet-backend.git/internal/features/users/repository/postgres"
 	users_service "github.com/DanielTitovsky/rivulet-backend.git/internal/features/users/service"
 	users_transport_http "github.com/DanielTitovsky/rivulet-backend.git/internal/features/users/transport/http"
@@ -93,7 +102,8 @@ func main() {
 	logger.Debug("Initiazling features", zap.String("feature", "Users"))
 
 	userRepo := users_postgres_repository.NewUsersRepository(pool)
-	userServide := users_service.NewUserServise(userRepo, *txManager)
+	UserStorageRepo := users_minio_repository.NewUserRepository(storage)
+	userServide := users_service.NewUserServise(userRepo, UserStorageRepo, *txManager)
 
 	userTransportHttp := users_transport_http.NewUsersHttpHandler(userServide)
 	userRoutes := userTransportHttp.Routers()
@@ -125,6 +135,24 @@ func main() {
 	authTransportHttp := auth_transport_http.NewAuthHttpHandler(authService, googleOAuthConfig)
 	authRouters := authTransportHttp.Routers()
 
+	logger.Debug("Initiazling features", zap.String("feature", "palylistRouters"))
+
+	palylistRepository := playlist_postgres_repository.NewUsersRepository(pool)
+	playlistStorageRepository := playlis_minio_repository.NewPlaylistRepository(storage)
+	palylistService := playlist_service.NewPlaylistService(palylistRepository, trackService, playlistStorageRepository)
+
+	palylistTransportHttp := playlist_transport_http.NewPlaylistHttpHandler(palylistService)
+	palylistRouters := palylistTransportHttp.Routers()
+
+	logger.Debug("Initiazling features", zap.String("feature", "Artist"))
+
+	artistRepository := artist_postgres_repository.NewArtistRepository(pool)
+	artisttStorageRepository := artist_minio_repository.NewArtistStorageRepository(*storage)
+	artistService := artist_service.NewArtistService(artistRepository, artisttStorageRepository, *txManager)
+
+	artistTransportHttp := artist_transport_http.NewArtistHttpHandler(artistService)
+	artistRouters := artistTransportHttp.Routers()
+
 	logger.Debug("Initiazling HTTP server")
 
 	httpServer := app_http_server.NewHttpServer(serverConfig, appLoger)
@@ -133,7 +161,9 @@ func main() {
 	httpServer.RegisterRouters(apiVersionRoute, userRoutes...)
 	httpServer.RegisterRouters(apiVersionRoute, trackRouters...)
 	httpServer.RegisterRouters(apiVersionRoute, tokenRouters...)
+	httpServer.RegisterRouters(apiVersionRoute, palylistRouters...)
 	httpServer.RegisterRouters(apiVersionRoute, authRouters...)
+	httpServer.RegisterRouters(apiVersionRoute, artistRouters...)
 
 	httpServer.Run(ctx)
 }

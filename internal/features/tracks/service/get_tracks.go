@@ -22,5 +22,27 @@ func (s *TrackServise) GetTracks(ctx context.Context, trackFilter domain.TrackFi
 		return nil, fmt.Errorf("Failed to get tracks: %w", err)
 	}
 
+	for index, track := range tracks {
+		if track.AudioStorageKey != "" {
+			trackAudioLink, err := s.TrackStorageRepository.GetTrackAudioLink(ctx, track.AudioStorageKey)
+
+			if err != nil {
+				return nil, fmt.Errorf("Get track audio link: %w", err)
+			}
+
+			tracks[index].AudioStorageKey = trackAudioLink
+		}
+
+		if track.CoverStorageKey != "" {
+			trackCoverLink, err := s.TrackStorageRepository.GetTrackCoverLink(ctx, track.CoverStorageKey)
+
+			if err != nil {
+				return nil, fmt.Errorf("Get track cover link: %w", err)
+			}
+
+			tracks[index].CoverStorageKey = trackCoverLink
+		}
+	}
+
 	return tracks, nil
 }

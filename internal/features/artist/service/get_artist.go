@@ -15,7 +15,7 @@ func (s *ArtistService) GetArtist(ctx context.Context, artistId uuid.UUID) (doma
 		return domain.Artist{}, fmt.Errorf("Select artist: %w", err)
 	}
 
-	artist.AvatarUrl, err = s.ArtistStorage.GetArtistAvatar(ctx, artistId)
+	artist.AvatarUrl, err = s.ArtistStorage.GetArtistAvatar(ctx, artist.AvatarUrl)
 
 	if err != nil {
 		return domain.Artist{}, fmt.Errorf("Get artist avatar: %w", err)

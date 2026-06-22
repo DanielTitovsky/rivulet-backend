@@ -15,7 +15,7 @@ type AlbumHttpHandler struct {
 
 type AlbumService interface {
 	GetAlbum(ctx context.Context, albumId uuid.UUID) (domain.Album, error)
-	GetArtistAbums(ctx context.Context, artistId uuid.UUID) ([]domain.Album, error)
+	GetArtistAlbums(ctx context.Context, artistId uuid.UUID) ([]domain.Album, error)
 }
 
 func NewAlbumHttpHandler(albumService AlbumService) *AlbumHttpHandler {
@@ -27,14 +27,9 @@ func NewAlbumHttpHandler(albumService AlbumService) *AlbumHttpHandler {
 func (h *AlbumHttpHandler) Routers() []app_http_server.Route {
 	return []app_http_server.Route{
 		{
-			Method:  http.MethodPost,
-			Path:    "/track/",
-			Handler: h.GetAlbum,
-		},
-		{
 			Method:  http.MethodGet,
-			Path:    "/track/:id",
-			Handler: h.GetArtistAbums,
+			Path:    "/album/:id",
+			Handler: h.GetAlbum,
 		},
 	}
 }

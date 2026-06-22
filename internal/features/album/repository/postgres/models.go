@@ -1,4 +1,4 @@
-package artist_postgres_repository
+package album_postgres_repository
 
 import (
 	"github.com/google/uuid"

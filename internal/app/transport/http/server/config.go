@@ -37,10 +37,7 @@ func NewConfigMust() HttpServerConfig {
 func GetCORSConfig() cors.Config {
 	return cors.Config{
 		AllowOriginFunc: func(origin string) bool {
-			return origin == "http://localhost:3000" ||
-				origin == "http://localhost:3001" ||
-				origin == "http://127.0.0.1:3000" ||
-				origin == "http://127.0.0.1:3001"
+			return true
 		},
 
 		AllowMethods: []string{
@@ -69,6 +66,7 @@ func GetCORSConfig() cors.Config {
 		},
 
 		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
+
+		MaxAge: 12 * time.Hour,
 	}
 }

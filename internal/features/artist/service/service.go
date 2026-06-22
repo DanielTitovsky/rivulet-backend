@@ -16,6 +16,7 @@ type ArtistService struct {
 
 type ArtistRepository interface {
 	GetArtist(ctx context.Context, artistId uuid.UUID) (domain.Artist, error)
+	GetArtistAlbums(ctx context.Context, artistId uuid.UUID) ([]domain.Album, error)
 }
 type ArtistStorage interface {
 	GetArtistAvatar(ctx context.Context, link string) (string, error)

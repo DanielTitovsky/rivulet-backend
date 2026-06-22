@@ -25,6 +25,12 @@ type TrackDTOResponse struct {
 }
 
 func trackDTOFromDomain(track domain.Track) TrackDTOResponse {
+	var albumId uuid.UUID
+
+	if track.AlbumId != nil {
+		albumId = *track.AlbumId
+	}
+
 	return TrackDTOResponse{
 		Id:          track.Id,
 		Name:        track.Name,
@@ -33,7 +39,7 @@ func trackDTOFromDomain(track domain.Track) TrackDTOResponse {
 		Cover:           track.CoverStorageKey,
 		AudioStorageKey: track.AudioStorageKey,
 		Genres:          track.Genres,
-		AlbumId:         *track.AlbumId,
+		AlbumId:         albumId,
 		Artists:         track.Artists,
 		Duration:        track.DurationSecond,
 		IsExplicit:      track.IsExplicit,
